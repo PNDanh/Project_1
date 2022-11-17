@@ -16,16 +16,17 @@ import org.hibernate.Transaction;
  * @author Admin
  */
 public class SizeRepository {
+
     private Session session = Hibernate_Util.getFACTORY().openSession();
-    
+
     private String fromTable = "From Size";
-    
-    public List<Size> getAll(){
+
+    public List<Size> getAll() {
         Query query = session.createQuery(fromTable, Size.class);
         List<Size> lists = query.getResultList();
-        return lists ;
+        return lists;
     }
-    
+
     public Size getOne(Long id) {
         String sql = fromTable + " WHERE id = :id";
         Query query = session.createQuery(sql, Size.class);
@@ -33,6 +34,7 @@ public class SizeRepository {
         Size size = (Size) query.getSingleResult();
         return size;
     }
+
     public Boolean add(Size size) {
         Transaction transaction = null;
         try ( Session session = Hibernate_Util.getFACTORY().openSession()) {
@@ -45,6 +47,7 @@ public class SizeRepository {
         }
         return null;
     }
+
     public Boolean update(Size size, Long id) {
         Transaction transaction = null;
         try ( Session session = Hibernate_Util.getFACTORY().openSession()) {
@@ -70,9 +73,10 @@ public class SizeRepository {
         }
         return null;
     }
+
     public static void main(String[] args) {
         List<Size> list = new SizeRepository().getAll();
-        for (Size loaisp : list){
+        for (Size loaisp : list) {
             System.out.println(loaisp.toString());
         }
     }
