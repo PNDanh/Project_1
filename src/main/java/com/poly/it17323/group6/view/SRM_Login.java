@@ -4,11 +4,17 @@
  */
 package com.poly.it17323.group6.view;
 
+import com.poly.it17323.group6.service.IQLNguoiDungService;
+import com.poly.it17323.group6.service.ipml.QLNguoiDungService;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author LE BAO NGOC
  */
 public class SRM_Login extends javax.swing.JFrame {
+
+    private final IQLNguoiDungService iqlnds;
 
     /**
      * Creates new form SRM_Login
@@ -16,7 +22,7 @@ public class SRM_Login extends javax.swing.JFrame {
     public SRM_Login() {
         initComponents();
         setLocationRelativeTo(this);
-        
+        iqlnds = new QLNguoiDungService();
     }
 
     /**
@@ -122,7 +128,12 @@ public class SRM_Login extends javax.swing.JFrame {
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
         new SRM_BanHang().setVisible(true);
-        this.dispose();
+//        if(iqlnds.Login(txtUser.getText(), txtPass.getText()) != null){
+//        JOptionPane.showMessageDialog(this, iqlnds.Login(txtUser.getText(), txtPass.getText()));
+
+//            this.dispose();
+//        }
+
     }//GEN-LAST:event_btnDangNhapActionPerformed
 
     /**

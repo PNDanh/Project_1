@@ -18,8 +18,8 @@ import java.util.List;
 public class QLNguoiDungService implements IQLNguoiDungService {
 
     private NguoiDungRepository repo = new NguoiDungRepository();
-    @Override
 
+    @Override
     public List<QLNguoiDungResponse> getAllNguoiDung() {
         List<NguoiDung> list = repo.getAll();
         List<QLNguoiDungResponse> respon = new ArrayList<>();
@@ -49,11 +49,26 @@ public class QLNguoiDungService implements IQLNguoiDungService {
     public boolean deleteQLND(QLNguoiDungResponse qlND) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
     public static void main(String[] args) {
         List<QLNguoiDungResponse> list = new QLNguoiDungService().getAllNguoiDung();
-        for(QLNguoiDungResponse p :list){
+        for (QLNguoiDungResponse p : list) {
             System.out.println(p.toString());
         }
+    }
+
+    @Override
+    public String Login(String tenTk, String pass) {
+        QLNguoiDungService qlnds = new QLNguoiDungService();
+        List<QLNguoiDungResponse> list = getAllNguoiDung();
+        for (QLNguoiDungResponse qLNguoiDungResponse : list) {
+            if (qLNguoiDungResponse.getTenTK().equals(tenTk) && qLNguoiDungResponse.getMatKhau().equals(pass) && qLNguoiDungResponse.getTenCV().equalsIgnoreCase("Nhân viên")) {
+                return "Đăng nhập thành công";
+            }else if(qLNguoiDungResponse.getTenTK().equals(tenTk) && qLNguoiDungResponse.getMatKhau().equals(pass) && qLNguoiDungResponse.getTenCV().equalsIgnoreCase("Quản lí")){
+                return "Đăng nhập thành công";
+            }
+        }
+        return "Đăng nhập thất bại";
     }
 
 }

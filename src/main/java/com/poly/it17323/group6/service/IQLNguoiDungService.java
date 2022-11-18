@@ -14,6 +14,8 @@ import java.util.List;
 public interface IQLNguoiDungService {
     List<QLNguoiDungResponse> getAllNguoiDung();
     
+    String Login(String tenTk, String pass);
+    
     QLNguoiDungResponse getOneQLNguoiDung(String id);
     
     boolean addQLND(QLNguoiDungResponse qlND);
