@@ -16,6 +16,7 @@ import org.hibernate.Transaction;
  * @author Admin
  */
 public class SizeRepository {
+<<<<<<< HEAD
     private Session session = Hibernate_Util.getFACTORY().openSession();
     
     private String fromTable = "From Size";
@@ -26,6 +27,19 @@ public class SizeRepository {
         return lists ;
     }
     
+=======
+
+    private Session session = Hibernate_Util.getFACTORY().openSession();
+
+    private String fromTable = "From Size";
+
+    public List<Size> getAll() {
+        Query query = session.createQuery(fromTable, Size.class);
+        List<Size> lists = query.getResultList();
+        return lists;
+    }
+
+>>>>>>> 9505eb7978d0620d16b6c528d11542c7bbe54916
     public Size getOne(Long id) {
         String sql = fromTable + " WHERE id = :id";
         Query query = session.createQuery(sql, Size.class);
@@ -33,6 +47,10 @@ public class SizeRepository {
         Size size = (Size) query.getSingleResult();
         return size;
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9505eb7978d0620d16b6c528d11542c7bbe54916
     public Boolean add(Size size) {
         Transaction transaction = null;
         try ( Session session = Hibernate_Util.getFACTORY().openSession()) {
@@ -45,6 +63,10 @@ public class SizeRepository {
         }
         return null;
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9505eb7978d0620d16b6c528d11542c7bbe54916
     public Boolean update(Size size, Long id) {
         Transaction transaction = null;
         try ( Session session = Hibernate_Util.getFACTORY().openSession()) {
@@ -70,10 +92,18 @@ public class SizeRepository {
         }
         return null;
     }
+<<<<<<< HEAD
     public static void main(String[] args) {
         List<Size> list = new SizeRepository().getAll();
         for (Size size : list){
             System.out.println(size.toString());
+=======
+
+    public static void main(String[] args) {
+        List<Size> list = new SizeRepository().getAll();
+        for (Size loaisp : list) {
+            System.out.println(loaisp.toString());
+>>>>>>> 9505eb7978d0620d16b6c528d11542c7bbe54916
         }
     }
 }
