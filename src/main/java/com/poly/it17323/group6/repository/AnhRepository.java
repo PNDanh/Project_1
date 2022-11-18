@@ -72,5 +72,10 @@ public class AnhRepository {
         }
         return null;
     }
-
+ public static void main(String[] args) {
+        List<Anh> list = new AnhRepository().getAll();
+        for (Anh anh : list) {
+            System.out.println(anh.toString());
+        }
+    }
 }

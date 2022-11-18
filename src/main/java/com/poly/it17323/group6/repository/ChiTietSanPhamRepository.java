@@ -4,13 +4,14 @@
  */
 package com.poly.it17323.group6.repository;
 
-import com.poly.it17323.group6.domainmodel.ChatLieu;
+
 import com.poly.it17323.group6.domainmodel.ChiTietSanPham;
 import com.poly.it17323.group6.hibernateconfig.Hibernate_Util;
 import java.util.List;
 import javax.persistence.Query;
+import javax.transaction.Transaction;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
+
 
 /**
  *
@@ -19,10 +20,10 @@ import org.hibernate.Transaction;
 public class ChiTietSanPhamRepository {
 
     private Session session = Hibernate_Util.getFACTORY().openSession();
-    private String fromTable = "From ChiTietSanPham";
+    private final String fromTable = "From ChiTietSP";
 
     public List<ChiTietSanPham> getAll() {
-        Query query = session.createQuery(fromTable, ChatLieu.class);
+        Query query = session.createQuery(fromTable,ChiTietSanPham.class);
         List<ChiTietSanPham> list = query.getResultList();
         return list;
     }
