@@ -20,7 +20,7 @@ import org.hibernate.Session;
 public class ChiTietSanPhamRepository {
 
     private Session session = Hibernate_Util.getFACTORY().openSession();
-    private final String fromTable = "From ChiTietSP";
+    private String fromTable = "From ChiTietSanPham";
 
     public List<ChiTietSanPham> getAll() {
         Query query = session.createQuery(fromTable,ChiTietSanPham.class);
