@@ -127,12 +127,17 @@ public class SRM_Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btnQuenmkActionPerformed
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
-        new SRM_BanHang().setVisible(true);
-//        if(iqlnds.Login(txtUser.getText(), txtPass.getText()) != null){
-//        JOptionPane.showMessageDialog(this, iqlnds.Login(txtUser.getText(), txtPass.getText()));
-
-//            this.dispose();
-//        }
+        
+        if(iqlnds.Login(txtUser.getText(), txtPass.getText(), "Nhân viên") == true){
+            JOptionPane.showMessageDialog(this, "Đăng nhập thành cônng");
+            new SRM_BanHang().setVisible(true);
+            this.dispose();
+        }else if(iqlnds.Login(txtUser.getText(), txtPass.getText(), "Quản lí") == true){
+//          
+        }else{
+            JOptionPane.showMessageDialog(this, "Đăng nhập thất bạị");
+            return;
+        }
 
     }//GEN-LAST:event_btnDangNhapActionPerformed
 

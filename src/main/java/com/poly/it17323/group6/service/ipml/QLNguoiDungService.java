@@ -58,17 +58,15 @@ public class QLNguoiDungService implements IQLNguoiDungService {
     }
 
     @Override
-    public String Login(String tenTk, String pass) {
+    public Boolean Login(String tenTk, String pass, String role) {
         QLNguoiDungService qlnds = new QLNguoiDungService();
         List<QLNguoiDungResponse> list = getAllNguoiDung();
         for (QLNguoiDungResponse qLNguoiDungResponse : list) {
-            if (qLNguoiDungResponse.getTenTK().equals(tenTk) && qLNguoiDungResponse.getMatKhau().equals(pass) && qLNguoiDungResponse.getTenCV().equalsIgnoreCase("Nhân viên")) {
-                return "Đăng nhập thành công";
-            }else if(qLNguoiDungResponse.getTenTK().equals(tenTk) && qLNguoiDungResponse.getMatKhau().equals(pass) && qLNguoiDungResponse.getTenCV().equalsIgnoreCase("Quản lí")){
-                return "Đăng nhập thành công";
+            if (qLNguoiDungResponse.getTenTK().equalsIgnoreCase(tenTk) && qLNguoiDungResponse.getMatKhau().equalsIgnoreCase(pass) && qLNguoiDungResponse.getTenCV().equalsIgnoreCase(role)) {
+                return true;
             }
         }
-        return "Đăng nhập thất bại";
+        return false;
     }
 
 }
