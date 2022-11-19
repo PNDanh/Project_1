@@ -26,7 +26,11 @@ public class MauSacRepository {
         return lists ;
     }
     
+<<<<<<< HEAD
     public MauSac getOne(Long id) {
+=======
+    public MauSac getOne(String id) {
+>>>>>>> 5c93c5c1930c7dd9ce1aa21e247c3c42c151f71d
         String sql = fromTable + " WHERE id = :id";
         Query query = session.createQuery(sql, MauSac.class);
         query.setParameter("id", id);
@@ -73,12 +77,17 @@ public class MauSacRepository {
     public static void main(String[] args) {
         List<MauSac> list = new MauSacRepository().getAll();
 <<<<<<< HEAD
+<<<<<<< HEAD
         for (MauSac mausac : list){
             System.out.println(mausac.toString());
 =======
         for (MauSac loaisp : list){
             System.out.println(loaisp.toString());
 >>>>>>> 9505eb7978d0620d16b6c528d11542c7bbe54916
+=======
+        for (MauSac loaisp : list){
+            System.out.println(loaisp.toString());
+>>>>>>> 5c93c5c1930c7dd9ce1aa21e247c3c42c151f71d
         }
     }
 }

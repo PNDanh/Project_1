@@ -17,6 +17,10 @@ import org.hibernate.Transaction;
  */
 public class SizeRepository {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5c93c5c1930c7dd9ce1aa21e247c3c42c151f71d
     private Session session = Hibernate_Util.getFACTORY().openSession();
     
     private String fromTable = "From Size";
@@ -26,6 +30,7 @@ public class SizeRepository {
         List<Size> lists = query.getResultList();
         return lists ;
     }
+<<<<<<< HEAD
     
 =======
 
@@ -41,6 +46,10 @@ public class SizeRepository {
 
 >>>>>>> 9505eb7978d0620d16b6c528d11542c7bbe54916
     public Size getOne(Long id) {
+=======
+
+    public Size getOne(String id) {
+>>>>>>> 5c93c5c1930c7dd9ce1aa21e247c3c42c151f71d
         String sql = fromTable + " WHERE id = :id";
         Query query = session.createQuery(sql, Size.class);
         query.setParameter("id", id);
@@ -48,9 +57,13 @@ public class SizeRepository {
         return size;
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> 9505eb7978d0620d16b6c528d11542c7bbe54916
+=======
+
+>>>>>>> 5c93c5c1930c7dd9ce1aa21e247c3c42c151f71d
     public Boolean add(Size size) {
         Transaction transaction = null;
         try ( Session session = Hibernate_Util.getFACTORY().openSession()) {
@@ -64,9 +77,13 @@ public class SizeRepository {
         return null;
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> 9505eb7978d0620d16b6c528d11542c7bbe54916
+=======
+
+>>>>>>> 5c93c5c1930c7dd9ce1aa21e247c3c42c151f71d
     public Boolean update(Size size, Long id) {
         Transaction transaction = null;
         try ( Session session = Hibernate_Util.getFACTORY().openSession()) {
@@ -93,17 +110,23 @@ public class SizeRepository {
         return null;
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
     public static void main(String[] args) {
         List<Size> list = new SizeRepository().getAll();
         for (Size size : list){
             System.out.println(size.toString());
 =======
+=======
+>>>>>>> 5c93c5c1930c7dd9ce1aa21e247c3c42c151f71d
 
     public static void main(String[] args) {
         List<Size> list = new SizeRepository().getAll();
         for (Size loaisp : list) {
             System.out.println(loaisp.toString());
+<<<<<<< HEAD
 >>>>>>> 9505eb7978d0620d16b6c528d11542c7bbe54916
+=======
+>>>>>>> 5c93c5c1930c7dd9ce1aa21e247c3c42c151f71d
         }
     }
 }

@@ -44,6 +44,19 @@
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
+<<<<<<< HEAD
+=======
+        <dependency>
+            <groupId>org.netbeans.external</groupId>
+            <artifactId>AbsoluteLayout</artifactId>
+            <version>RELEASE126</version>
+        </dependency>   
+        <dependency>
+            <groupId>com.toedter</groupId>
+            <artifactId>jcalendar</artifactId>
+            <version>1.4</version>
+        </dependency>    
+>>>>>>> 5c93c5c1930c7dd9ce1aa21e247c3c42c151f71d
     </dependencies>
     <name>DuAn1_Nhom6</name>
 </project>

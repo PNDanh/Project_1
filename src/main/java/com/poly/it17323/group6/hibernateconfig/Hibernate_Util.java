@@ -37,7 +37,11 @@ public class Hibernate_Util {
         properties.put(Environment.DRIVER, "com.microsoft.sqlserver.jdbc.SQLServerDriver");
         properties.put(Environment.URL, "jdbc:sqlserver://localhost:1433;databaseName=DUAN1_NHOM6_PMBANQUANAO");
         properties.put(Environment.USER, "sa");
+<<<<<<< HEAD
         properties.put(Environment.PASS, "123456789");
+=======
+        properties.put(Environment.PASS, "123456");
+>>>>>>> 5c93c5c1930c7dd9ce1aa21e247c3c42c151f71d
         properties.put(Environment.SHOW_SQL, "true");
 
         conf.setProperties(properties);

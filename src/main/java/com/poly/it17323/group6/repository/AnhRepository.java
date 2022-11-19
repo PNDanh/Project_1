@@ -26,7 +26,7 @@ public class AnhRepository {
         return list;
     }
 
-    public Anh getOne(Integer id) {
+    public Anh getOne(String id) {
         String sql = fromTable + "Where id =: id";
         Query query = session.createQuery(fromTable, Anh.class);
         query.setParameter("id", id);
@@ -73,7 +73,10 @@ public class AnhRepository {
         return null;
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> 64c18dcf11de9d11972e7cc981f058423c33ad49
+=======
+>>>>>>> 5c93c5c1930c7dd9ce1aa21e247c3c42c151f71d
 }

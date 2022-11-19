@@ -4,18 +4,34 @@
  */
 package com.poly.it17323.group6.view;
 
+<<<<<<< HEAD
+=======
+import com.poly.it17323.group6.service.INguoiDungService;
+import com.poly.it17323.group6.service.ipml.NguoiDungService;
+import javax.swing.JOptionPane;
+
+>>>>>>> 5c93c5c1930c7dd9ce1aa21e247c3c42c151f71d
 /**
  *
  * @author LE BAO NGOC
  */
 public class SRM_Login extends javax.swing.JFrame {
 
+<<<<<<< HEAD
     /**
      * Creates new form SRM_Login
      */
     public SRM_Login() {
         initComponents();
         setLocationRelativeTo(this);
+=======
+    private INguoiDungService iND = new NguoiDungService();
+
+    public SRM_Login() {
+        initComponents();
+        setLocationRelativeTo(this);
+
+>>>>>>> 5c93c5c1930c7dd9ce1aa21e247c3c42c151f71d
     }
 
     /**
@@ -96,6 +112,7 @@ public class SRM_Login extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+<<<<<<< HEAD
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -103,6 +120,13 @@ public class SRM_Login extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 473, Short.MAX_VALUE)
+=======
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
+>>>>>>> 5c93c5c1930c7dd9ce1aa21e247c3c42c151f71d
         );
 
         pack();
@@ -113,7 +137,11 @@ public class SRM_Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void txtUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserActionPerformed
+<<<<<<< HEAD
         // TODO add your handling code here:
+=======
+
+>>>>>>> 5c93c5c1930c7dd9ce1aa21e247c3c42c151f71d
     }//GEN-LAST:event_txtUserActionPerformed
 
     private void btnQuenmkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuenmkActionPerformed
@@ -122,7 +150,18 @@ public class SRM_Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btnQuenmkActionPerformed
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
+<<<<<<< HEAD
         // TODO add your handling code here:
+=======
+        if (iND.Login(txtUser.getText(), txtPass.getText(), "Nhân viên") == true) {
+            JOptionPane.showMessageDialog(this, "Đăng nhập thành cônng");
+            new SRM_BanHang().setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Đăng nhập thất bạị");
+            return;
+        }
+>>>>>>> 5c93c5c1930c7dd9ce1aa21e247c3c42c151f71d
     }//GEN-LAST:event_btnDangNhapActionPerformed
 
     /**

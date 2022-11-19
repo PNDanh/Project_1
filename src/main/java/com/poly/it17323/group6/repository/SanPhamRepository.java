@@ -26,7 +26,11 @@ public class SanPhamRepository {
         return lists ;
     }
     
+<<<<<<< HEAD
     public SanPham getOne(Long id) {
+=======
+    public SanPham getOne(String id) {
+>>>>>>> 5c93c5c1930c7dd9ce1aa21e247c3c42c151f71d
         String sql = fromTable + " WHERE id = :id";
         Query query = session.createQuery(sql, SanPham.class);
         query.setParameter("id", id);
@@ -73,12 +77,18 @@ public class SanPhamRepository {
     public static void main(String[] args) {
         List<SanPham> list = new SanPhamRepository().getAll();
 <<<<<<< HEAD
+<<<<<<< HEAD
         for (SanPham sanpham : list){
             System.out.println(sanpham.toString());
 =======
         for (SanPham loaisp : list){
             System.out.println(loaisp.toString());
 >>>>>>> 9505eb7978d0620d16b6c528d11542c7bbe54916
+=======
+        for (SanPham sanpham : list){
+            System.out.println(sanpham.toString());
+
+>>>>>>> 5c93c5c1930c7dd9ce1aa21e247c3c42c151f71d
         }
     }
 }

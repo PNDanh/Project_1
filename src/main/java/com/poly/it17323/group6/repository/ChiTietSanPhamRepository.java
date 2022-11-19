@@ -22,12 +22,12 @@ public class ChiTietSanPhamRepository {
     private String fromTable = "From ChiTietSanPham";
 
     public List<ChiTietSanPham> getAll() {
-        Query query = session.createQuery(fromTable, ChatLieu.class);
+        Query query = session.createQuery(fromTable, ChiTietSanPham.class);
         List<ChiTietSanPham> list = query.getResultList();
         return list;
     }
 
-    public ChiTietSanPham getOne(Integer id) {
+    public ChiTietSanPham getOne(String id) {
         String sql = fromTable + "Where id =: id";
         Query query = session.createQuery(fromTable, ChiTietSanPham.class);
         query.setParameter("id", id);

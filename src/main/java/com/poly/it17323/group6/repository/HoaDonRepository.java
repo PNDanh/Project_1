@@ -22,7 +22,11 @@ public class HoaDonRepository {
         return list;
     }
 
+<<<<<<< HEAD
     public HoaDon getOne(Integer id) {
+=======
+    public HoaDon getOne(String id) {
+>>>>>>> 5c93c5c1930c7dd9ce1aa21e247c3c42c151f71d
         String sql = fromTable + "Where id =: id";
         Query query = session.createQuery(fromTable, HoaDon.class);
         query.setParameter("id", id);
