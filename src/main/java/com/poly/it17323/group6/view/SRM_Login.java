@@ -4,8 +4,8 @@
  */
 package com.poly.it17323.group6.view;
 
-import com.poly.it17323.group6.service.IQLNguoiDungService;
-import com.poly.it17323.group6.service.ipml.QLNguoiDungService;
+import com.poly.it17323.group6.service.INguoiDungService;
+import com.poly.it17323.group6.service.ipml.NguoiDungService;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,15 +14,12 @@ import javax.swing.JOptionPane;
  */
 public class SRM_Login extends javax.swing.JFrame {
 
-    private final IQLNguoiDungService iqlnds;
+    private INguoiDungService iND = new NguoiDungService();
 
-    /**
-     * Creates new form SRM_Login
-     */
     public SRM_Login() {
         initComponents();
         setLocationRelativeTo(this);
-        iqlnds = new QLNguoiDungService();
+
     }
 
     /**
@@ -118,7 +115,7 @@ public class SRM_Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void txtUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_txtUserActionPerformed
 
     private void btnQuenmkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuenmkActionPerformed
@@ -127,18 +124,14 @@ public class SRM_Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btnQuenmkActionPerformed
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
-        
-        if(iqlnds.Login(txtUser.getText(), txtPass.getText(), "Nhân viên") == true){
+        if (iND.Login(txtUser.getText(), txtPass.getText(), "Nhân viên") == true) {
             JOptionPane.showMessageDialog(this, "Đăng nhập thành cônng");
             new SRM_BanHang().setVisible(true);
             this.dispose();
-        }else if(iqlnds.Login(txtUser.getText(), txtPass.getText(), "Quản lí") == true){
-//          
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Đăng nhập thất bạị");
             return;
         }
-
     }//GEN-LAST:event_btnDangNhapActionPerformed
 
     /**

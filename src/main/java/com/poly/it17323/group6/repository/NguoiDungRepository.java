@@ -70,10 +70,10 @@ public class NguoiDungRepository {
         }
         return null;
     }
-//    public static void main(String[] args) {
-//        List<NguoiDung> list = new NguoiDungRepository().getAll();
-//        for (NguoiDung nguoidung : list){
-//            System.out.println(nguoidung.toString());
-//        }
-//    }
+    public static void main(String[] args) {
+        List<NguoiDung> list = new NguoiDungRepository().getAll();
+        for (NguoiDung nguoidung : list){
+            System.out.println(nguoidung.toString());
+        }
+    }
 }
