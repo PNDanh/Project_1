@@ -131,6 +131,8 @@ INSERT INTO NguoiDung(IdCV,MaND,TenTK,MatKhau, HoVaTen, GioiTinh, NgaySinh, Emai
 VALUES('FC9BB7FF-A8B7-400A-AFDA-75D1A56126B6',N'ND01','vanne1312',13121112,N'Lê Thị Nguyệt Vân',N'Nữ',
 '1-12-2003','vanltnph26342@fpt.edu.vn','0932343783',N'Hoá Chất','001304656874',1,'10-11-2022','11-11-2022')
 
+update NguoiDung set MatKhau = '123' where MaND = 'ND01'
+
 SELECT*FROM NguoiDung
 
 CREATE TABLE KhachHang
@@ -192,6 +194,7 @@ GO
 
 INSERT INTO KhuyenMai(MaKM, TenKM, NgayBatDau, NgayKetThuc, MoTa, GiamGia, TinhTrang, NgayTao, NgaySua)
 VALUES('KM01','SALE 20-11','2022-11-19','2022-11-20', N'Tất cả sản phẩm đã rách sale 99%',99,1,'10-11-2022','11-11-2022')
+VALUES('KM02','SALE 20-10','2022-11-19','2022-11-20', N'Áo nữ sale 10%',10,1,'10-11-2022','11-11-2022')
 
 SELECT * FROM KhuyenMai
 

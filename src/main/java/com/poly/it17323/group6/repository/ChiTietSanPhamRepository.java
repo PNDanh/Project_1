@@ -23,12 +23,16 @@ public class ChiTietSanPhamRepository {
     private String fromTable = "From ChiTietSanPham";
 
     public List<ChiTietSanPham> getAll() {
+<<<<<<< HEAD
         Query query = session.createQuery(fromTable,ChiTietSanPham.class);
+=======
+        Query query = session.createQuery(fromTable, ChiTietSanPham.class);
+>>>>>>> c80c62bc04230905ea1cbab35d6d94e4f5e8180f
         List<ChiTietSanPham> list = query.getResultList();
         return list;
     }
 
-    public ChiTietSanPham getOne(Integer id) {
+    public ChiTietSanPham getOne(String id) {
         String sql = fromTable + "Where id =: id";
         Query query = session.createQuery(fromTable, ChiTietSanPham.class);
         query.setParameter("id", id);
