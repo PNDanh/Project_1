@@ -21,8 +21,7 @@ import com.poly.it17323.group6.service.ipml.HoaDonService;
 import com.poly.it17323.group6.service.ipml.NguoiDungService;
 import java.awt.CardLayout;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -45,7 +44,7 @@ public class SRM_BanHang extends javax.swing.JFrame {
     private DefaultTableModel modelCV;
     private DefaultTableModel modelND;
     private DefaultComboBoxModel comboBoxND;
-    
+
     private final CardLayout cardLayout;
 
     public SRM_BanHang() {
@@ -2954,68 +2953,76 @@ public class SRM_BanHang extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_nd_ClearActionPerformed
 
     private void btn_nd_ThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nd_ThemActionPerformed
-     NguoiDung nd = new NguoiDung();
-     java.sql.Date ngaySinh = java.sql.Date.valueOf(txt_nd_NgaySinh.getText());
-     java.sql.Date ngayTao = java.sql.Date.valueOf(txt_nd_NgayTao.getText());
-     java.sql.Date ngaySua = java.sql.Date.valueOf(txt_nd_NgaySua.getText());
-     nd.setMaND(txt_nd_MaND.getText());
-     nd.setTenTK(txt_nd_TenTK.getText());
-     nd.setMatKhau(txt_nd_MatKhau.getText());
-     nd.setHoTen(txt_nd_HovaTen.getText());
-     nd.setGioiTinh(buttonGroup1.getElements().toString());
-     nd.setNgaySinh(ngaySinh);
-     nd.setEmail(txt_nd_Email.getText());
-     nd.setSdt(txt_nd_Sdt.getText());
-     nd.setDiaChi(txt_nd_DiaChi.getText());
-     nd.setCccd(txt_nd_CCCD.getText());
-     if(rdo_nd_DangLam.isSelected()){
-         nd.setTinhTrang(1);
-     }else if(rdo_nd_NghiLam.isSelected()){
-         nd.setTinhTrang(0);
-     }else{
-         nd.setTinhTrang(null);
-     }
-     nd.setNgayTao(ngayTao);
-     nd.setNgaySua(ngaySua);
-     iND.add(nd);
-     loadND();
-      
+        NguoiDung nd = new NguoiDung();
+        java.sql.Date ngaySinh = java.sql.Date.valueOf(txt_nd_NgaySinh.getText());
+        java.sql.Date ngayTao = java.sql.Date.valueOf(txt_nd_NgayTao.getText());
+        java.sql.Date ngaySua = java.sql.Date.valueOf(txt_nd_NgaySua.getText());
+        nd.setMaND(txt_nd_MaND.getText());
+        nd.setTenTK(txt_nd_TenTK.getText());
+        nd.setMatKhau(txt_nd_MatKhau.getText());
+        nd.setHoTen(txt_nd_HovaTen.getText());
+        if (rdo_nd_Nam.isSelected()) {
+            nd.setGioiTinh("Nam");
+        } else if (rdo_nd_Nu.isSelected()) {
+            nd.setGioiTinh("Nữ");
+        }
+        nd.setNgaySinh(ngaySinh);
+        nd.setEmail(txt_nd_Email.getText());
+        nd.setSdt(txt_nd_Sdt.getText());
+        nd.setDiaChi(txt_nd_DiaChi.getText());
+        nd.setCccd(txt_nd_CCCD.getText());
+        if (rdo_nd_DangLam.isSelected()) {
+            nd.setTinhTrang(1);
+        } else if (rdo_nd_NghiLam.isSelected()) {
+            nd.setTinhTrang(0);
+        }
+        nd.setNgayTao(ngayTao);
+        nd.setNgaySua(ngaySua);
+        iND.add(nd);
+        loadND();
+
     }//GEN-LAST:event_btn_nd_ThemActionPerformed
 
     private void btn_nd_XoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nd_XoaActionPerformed
-     int row = tbl_nd_DangLam.getSelectedRow();
-     NguoiDung ND = iND.getObjById(tbl_nd_DangLam.getValueAt(row, 0).toString());
-     iND.delete(ND);
-     loadND();
+        NguoiDung nd = new NguoiDung();
+        NguoiDung ND = iND.getObjById(nd.getIdND());
+        iND.delete(ND);
+        loadND();
     }//GEN-LAST:event_btn_nd_XoaActionPerformed
 
     private void btn_nd_SuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nd_SuaActionPerformed
-     int row = tbl_nd_DangLam.getSelectedRow();
-     NguoiDung nd = new NguoiDung();
-     java.sql.Date ngaySinh = java.sql.Date.valueOf(txt_nd_NgaySinh.getText());
-     java.sql.Date ngayTao = java.sql.Date.valueOf(txt_nd_NgayTao.getText());
-     java.sql.Date ngaySua = java.sql.Date.valueOf(txt_nd_NgaySua.getText());
-     nd.setMaND(txt_nd_MaND.getText());
-     nd.setTenTK(txt_nd_TenTK.getText());
-     nd.setMatKhau(txt_nd_MatKhau.getText());
-     nd.setHoTen(txt_nd_HovaTen.getText());
-     nd.setGioiTinh(buttonGroup1.getElements().toString());
-     nd.setNgaySinh(ngaySinh);
-     nd.setEmail(txt_nd_Email.getText());
-     nd.setSdt(txt_nd_Sdt.getText());
-     nd.setDiaChi(txt_nd_DiaChi.getText());
-     nd.setCccd(txt_nd_CCCD.getText());
-     if(rdo_nd_DangLam.isSelected()){
-         nd.setTinhTrang(1);
-     }else if(rdo_nd_NghiLam.isSelected()){
-         nd.setTinhTrang(0);
-     }else{
-         nd.setTinhTrang(null);
-     }
-     nd.setNgayTao(ngayTao);
-     nd.setNgaySua(ngaySua);
-     iND.update(nd, tbl_nd_DangLam.getValueAt(row, 0).toString());
-     loadND();
+        int row = tbl_nd_DangLam.getSelectedRow();
+        NguoiDung nd = new NguoiDung();
+        ChucVu cv = new ChucVu();
+        Date ngaySinh = Date.valueOf(txt_nd_NgaySinh.getText());
+        Date ngayTao = Date.valueOf(txt_nd_NgayTao.getText());
+        Date ngaySua = Date.valueOf(txt_nd_NgaySua.getText());
+        cv.setTenCV(cbb_nd_ChucVu.getSelectedItem().toString());
+        nd.setMaND(txt_nd_MaND.getText());
+        nd.setTenTK(txt_nd_TenTK.getText());
+        nd.setMatKhau(txt_nd_MatKhau.getText());
+        nd.setHoTen(txt_nd_HovaTen.getText());
+        if (rdo_nd_Nam.isSelected()) {
+            nd.setGioiTinh("Nam");
+        } else if (rdo_nd_Nu.isSelected()) {
+            nd.setGioiTinh("Nữ");
+        }
+        nd.setNgaySinh(ngaySinh);
+        nd.setEmail(txt_nd_Email.getText());
+        nd.setSdt(txt_nd_Sdt.getText());
+        nd.setDiaChi(txt_nd_DiaChi.getText());
+        nd.setCccd(txt_nd_CCCD.getText());
+        if (rdo_nd_DangLam.isSelected()) {
+            nd.setTinhTrang(1);
+        } else if (rdo_nd_NghiLam.isSelected()) {
+            nd.setTinhTrang(0);
+        } else {
+            nd.setTinhTrang(null);
+        }
+        nd.setNgayTao(ngayTao);
+        nd.setNgaySua(ngaySua);
+        iND.update(nd, nd.getIdND());
+        loadND();
     }//GEN-LAST:event_btn_nd_SuaActionPerformed
 
     /**
@@ -3100,7 +3107,7 @@ public class SRM_BanHang extends javax.swing.JFrame {
             comboBoxND.addElement(cv.getTenCV());
         }
     }
-    
+
 //    private NguoiDung getFrom(){
 //        Date d = new Date();
 //        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -3108,7 +3115,6 @@ public class SRM_BanHang extends javax.swing.JFrame {
 //        ngaySinh = java.sql.Date.valueOf(sdf.format(d));
 //        return new NguoiDung(null, maND, tenTK, matKhau, hoTen, gioiTinh, ngaySinh, email, sdt, diaChi, cccd, WIDTH, ngayTao, ngaySua, chucVu);
 //    }
-
     private void loadND() {
         String Header[] = {"MaND", "TenTK", "MatKhau", "HovaTen", "GioiTinh", "NgaySinh",
             "Email", "SDT", "DiaChi", "CCCD/CMT", "TinhTrang", "NgayTao", "NgaySua", "ChucVu"};
@@ -3117,9 +3123,9 @@ public class SRM_BanHang extends javax.swing.JFrame {
         tbl_nd_DangLam.setModel(modelND);
         for (NguoiDung x : iND.getAll()) {
             modelND.addRow(new Object[]{x.getMaND(), x.getTenTK(), x.getMatKhau(),
-                 x.getHoTen(), x.getGioiTinh(), x.getNgaySinh(), x.getEmail(),
-                 x.getSdt(), x.getDiaChi(), x.getCccd(), setTinhTrang(x.getTinhTrang()),
-                 x.getNgayTao(), x.getNgaySua(), x.getChucVu().getTenCV()});
+                x.getHoTen(), x.getGioiTinh(), x.getNgaySinh(), x.getEmail(),
+                x.getSdt(), x.getDiaChi(), x.getCccd(), setTinhTrang(x.getTinhTrang()),
+                x.getNgayTao(), x.getNgaySua(), x.getChucVu().getTenCV()});
         }
     }
 
