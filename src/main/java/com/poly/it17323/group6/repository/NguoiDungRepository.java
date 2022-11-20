@@ -4,9 +4,9 @@
  */
 package com.poly.it17323.group6.repository;
 
+import com.poly.it17323.group6.domainmodel.ChucVu;
 import com.poly.it17323.group6.domainmodel.NguoiDung;
 import com.poly.it17323.group6.hibernateconfig.Hibernate_Util;
-import java.sql.Date;
 import java.util.List;
 import javax.persistence.Query;
 import org.hibernate.Session;
@@ -17,16 +17,17 @@ import org.hibernate.Transaction;
  * @author Admin
  */
 public class NguoiDungRepository {
+
     private Session session = Hibernate_Util.getFACTORY().openSession();
-    
+
     private String fromTable = "From NguoiDung";
-    
-    public List<NguoiDung> getAll(){
+
+    public List<NguoiDung> getAll() {
         Query query = session.createQuery(fromTable, NguoiDung.class);
         List<NguoiDung> lists = query.getResultList();
-        return lists ;
+        return lists;
     }
-    
+
     public NguoiDung getOne(String id) {
         String sql = fromTable + " WHERE id = :id";
         Query query = session.createQuery(sql, NguoiDung.class);
@@ -34,6 +35,7 @@ public class NguoiDungRepository {
         NguoiDung nguoidung = (NguoiDung) query.getSingleResult();
         return nguoidung;
     }
+
     public Boolean add(NguoiDung nguoidung) {
         Transaction transaction = null;
         try ( Session session = Hibernate_Util.getFACTORY().openSession()) {
@@ -46,7 +48,8 @@ public class NguoiDungRepository {
         }
         return null;
     }
-    public Boolean update(NguoiDung nguoidung, String id) {
+
+    public Boolean update(NguoiDung nguoidung) {
         Transaction transaction = null;
         try ( Session session = Hibernate_Util.getFACTORY().openSession()) {
             transaction = session.beginTransaction();
@@ -71,10 +74,12 @@ public class NguoiDungRepository {
         }
         return null;
     }
+
     public static void main(String[] args) {
-        List<NguoiDung> list = new NguoiDungRepository().getAll();
-        for (NguoiDung nguoidung : list){
-            System.out.println(nguoidung.toString());
-        }
+        NguoiDungRepository re = new NguoiDungRepository();
+        NguoiDung nd = re.getAll().get(0);
+        ChucVuRepository reCV = new ChucVuRepository();
+        ChucVu cv = reCV.getAll().get(0);
+        re.update(new NguoiDung(nd.getIdND(), "ND0002", nd.getTenTK(), nd.getMatKhau(), nd.getHoTen(), nd.getGioiTinh(), nd.getNgaySinh(), nd.getEmail(), nd.getSdt(), nd.getDiaChi(), nd.getCccd(), nd.getTinhTrang(), nd.getNgayTao(), nd.getNgaySua(), cv));
     }
 }

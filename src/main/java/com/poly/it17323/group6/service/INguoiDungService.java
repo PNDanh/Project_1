@@ -21,8 +21,7 @@ public interface INguoiDungService {
     boolean add(NguoiDung ND);
     
 
-    boolean update(NguoiDung ND,String Id);
+    boolean update(NguoiDung ND);
 
     boolean delete(NguoiDung ND);
-    NguoiDung getObjById(String Id);
 }
