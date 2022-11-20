@@ -35,7 +35,7 @@ public class HoaDonChiTiet implements Serializable {
     @Id
     @Column(name = "IdHDCT")
     @GeneratedValue
-    private UUID idHDCT;
+    private String idHDCT;
 
     @Column(name = "Gia")
     private BigDecimal gia;

@@ -12,7 +12,5 @@ import java.util.List;
  * @author pdanh
  */
 public interface IHoaDonService {
-
     List<HoaDon> getAll();
-
 }

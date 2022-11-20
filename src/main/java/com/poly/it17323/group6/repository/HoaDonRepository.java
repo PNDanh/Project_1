@@ -1,12 +1,7 @@
 package com.poly.it17323.group6.repository;
 
 import com.poly.it17323.group6.domainmodel.HoaDon;
-import com.poly.it17323.group6.domainmodel.KhachHang;
-import com.poly.it17323.group6.domainmodel.NguoiDung;
 import com.poly.it17323.group6.hibernateconfig.Hibernate_Util;
-import java.math.BigDecimal;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.persistence.Query;
 import org.hibernate.Session;
@@ -72,5 +67,12 @@ public class HoaDonRepository {
             e.printStackTrace(System.out);
         }
         return null;
+    }
+
+    public static void main(String[] args) {
+        List<HoaDon> list = new HoaDonRepository().getAll();
+        for (HoaDon hoaDon : list) {
+            System.out.println(hoaDon.toString());
+        }
     }
 }

@@ -7,26 +7,14 @@ package com.poly.it17323.group6.view;
 import com.poly.it17323.group6.domainmodel.ChiTietSanPham;
 import com.poly.it17323.group6.domainmodel.HoaDon;
 import com.poly.it17323.group6.domainmodel.HoaDonChiTiet;
-import com.poly.it17323.group6.response.BanHangView;
-import com.poly.it17323.group6.response.BanhangReponse;
-import com.poly.it17323.group6.service.IBanHangService;
 import com.poly.it17323.group6.service.IChiTietSanPhamService;
 import com.poly.it17323.group6.service.IHoaDonChiTietService;
 import com.poly.it17323.group6.service.IHoaDonService;
-import com.poly.it17323.group6.service.IKhachHangService;
-import com.poly.it17323.group6.service.INguoiDungService;
-import com.poly.it17323.group6.service.ipml.BanHangService;
 import com.poly.it17323.group6.service.ipml.ChiTietSanPhamService;
 import com.poly.it17323.group6.service.ipml.HoaDonChiTietService;
 import com.poly.it17323.group6.service.ipml.HoaDonService;
-import com.poly.it17323.group6.service.ipml.KhachHangService;
-import com.poly.it17323.group6.service.ipml.NguoiDungService;
 import java.awt.CardLayout;
-import java.math.BigDecimal;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -35,27 +23,25 @@ import javax.swing.table.DefaultTableModel;
  */
 public class SRM_BanHang extends javax.swing.JFrame {
 
-    private final IBanHangService iBH = new BanHangService();
-    private final IHoaDonService iHD = new HoaDonService();
-    private final IHoaDonChiTietService iHDCT = new HoaDonChiTietService();
-    private final IChiTietSanPhamService iCTSP = new ChiTietSanPhamService();
-    private final INguoiDungService iND = new NguoiDungService();
-    private final IKhachHangService iKH = new KhachHangService();
+    private IHoaDonService iHD = new HoaDonService();
+    private IHoaDonChiTietService iHDCT = new HoaDonChiTietService();
+    private IChiTietSanPhamService iCTSP = new ChiTietSanPhamService();
     private DefaultTableModel modelSP;
     private DefaultTableModel modelHD;
     private DefaultTableModel modelCTHD;
-    private final CardLayout cardLayout;
+
+    private CardLayout cardLayout;
 
     public SRM_BanHang() {
         initComponents();
         setLocationRelativeTo(null);
+//        setExtendedState(MAXIMIZED_BOTH);
         cardLayout = (CardLayout) PN_Main.getLayout();
         ImageIcon im1 = new ImageIcon("user.png");
         txtAnhNV.setIcon(im1);
         loadDataSP();
         loadDataHD();
         loadHDCT();
-        //    setExtendedState(MAXIMIZED_BOTH);
     }
 
     /**
@@ -84,7 +70,7 @@ public class SRM_BanHang extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         PN_KhachHang = new javax.swing.JPanel();
         jLabel85 = new javax.swing.JLabel();
-        btnExist = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         AnhNV = new javax.swing.JPanel();
@@ -107,9 +93,9 @@ public class SRM_BanHang extends javax.swing.JFrame {
         DonHang = new javax.swing.JPanel();
         KhachHang = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        lblMaKH = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         lblTenKH = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        lblSdt = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         ThongTin = new javax.swing.JPanel();
@@ -540,11 +526,6 @@ public class SRM_BanHang extends javax.swing.JFrame {
         );
 
         PN_KhachHang.setBackground(new java.awt.Color(51, 204, 255));
-        PN_KhachHang.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                PN_KhachHangMouseClicked(evt);
-            }
-        });
 
         jLabel85.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel85.setForeground(new java.awt.Color(255, 255, 255));
@@ -567,10 +548,10 @@ public class SRM_BanHang extends javax.swing.JFrame {
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
-        btnExist.setText("Exits");
-        btnExist.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setText("Exits");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExistActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -644,7 +625,7 @@ public class SRM_BanHang extends javax.swing.JFrame {
                         .addContainerGap())))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ChucNangLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnExist, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40))
         );
         ChucNangLayout.setVerticalGroup(
@@ -666,7 +647,7 @@ public class SRM_BanHang extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PN_KhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
-                .addComponent(btnExist)
+                .addComponent(jButton1)
                 .addGap(58, 58, 58))
         );
 
@@ -697,11 +678,6 @@ public class SRM_BanHang extends javax.swing.JFrame {
 
         GioHang.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "GIỎ HÀNG", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
-        tblGioHang.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblGioHangMouseClicked(evt);
-            }
-        });
         jScrollPane2.setViewportView(tblGioHang);
 
         btnXoa.setBackground(new java.awt.Color(255, 102, 102));
@@ -781,12 +757,12 @@ public class SRM_BanHang extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel8.setText("Ma KH");
 
-        lblMaKH.setText("jLabel9");
+        lblTenKH.setText("jLabel9");
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel10.setText("Ten KH");
 
-        lblTenKH.setText("jLabel11");
+        lblSdt.setText("jLabel11");
 
         jButton5.setBackground(new java.awt.Color(255, 255, 0));
         jButton5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -807,8 +783,8 @@ public class SRM_BanHang extends javax.swing.JFrame {
                     .addComponent(jLabel10))
                 .addGap(22, 22, 22)
                 .addGroup(KhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblTenKH, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblMaKH, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblSdt, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTenKH, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(KhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton6)
@@ -824,17 +800,17 @@ public class SRM_BanHang extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(KhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblMaKH)
+                    .addComponent(lblTenKH)
                     .addComponent(jButton5))
                 .addGap(27, 27, 27)
                 .addGroup(KhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTenKH)
+                    .addComponent(lblSdt)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton6))
                 .addContainerGap())
         );
 
-        KhachHangLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel10, jLabel8, lblMaKH, lblTenKH});
+        KhachHangLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel10, jLabel8, lblSdt, lblTenKH});
 
         KhachHangLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton5, jButton6});
 
@@ -871,11 +847,6 @@ public class SRM_BanHang extends javax.swing.JFrame {
         btnTaoHD.setBackground(new java.awt.Color(255, 255, 0));
         btnTaoHD.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnTaoHD.setText("Tạo hóa đơn");
-        btnTaoHD.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnTaoHDMouseClicked(evt);
-            }
-        });
 
         javax.swing.GroupLayout ThongTinLayout = new javax.swing.GroupLayout(ThongTin);
         ThongTin.setLayout(ThongTinLayout);
@@ -2845,46 +2816,50 @@ public class SRM_BanHang extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void PN_BanHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PN_BanHangMouseClicked
-        nextPN(QL_BanHang);
+        PN_Main.removeAll();
+        PN_Main.add(QL_BanHang);
+        PN_Main.repaint();
+        PN_Main.validate();
     }//GEN-LAST:event_PN_BanHangMouseClicked
 
     private void PN_QLNguoiDungMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PN_QLNguoiDungMouseClicked
-        nextPN(QL_NguoiDung);
+        PN_Main.removeAll();
+        PN_Main.add(QL_NguoiDung);
+        PN_Main.repaint();
+        PN_Main.validate();
     }//GEN-LAST:event_PN_QLNguoiDungMouseClicked
 
     private void PN_KhuyenMaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PN_KhuyenMaiMouseClicked
-        nextPN(QL_KhuyenMai);
+        PN_Main.removeAll();
+        PN_Main.add(QL_KhuyenMai);
+        PN_Main.repaint();
+        PN_Main.validate();
     }//GEN-LAST:event_PN_KhuyenMaiMouseClicked
 
     private void PN_QLThongKeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PN_QLThongKeMouseClicked
-        nextPN(QL_ThongKe);
+        PN_Main.removeAll();
+        PN_Main.add(QL_ThongKe);
+        PN_Main.repaint();
+        PN_Main.validate();
     }//GEN-LAST:event_PN_QLThongKeMouseClicked
 
     private void PN_QLSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PN_QLSanPhamMouseClicked
-        nextPN(QL_SanPham);
+        PN_Main.removeAll();
+        PN_Main.add(QL_SanPham);
+        PN_Main.repaint();
+        PN_Main.validate();
     }//GEN-LAST:event_PN_QLSanPhamMouseClicked
 
     private void PN_QLHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PN_QLHoaDonMouseClicked
-        nextPN(QL_HoaDon);
+        PN_Main.removeAll();
+        PN_Main.add(QL_HoaDon);
+        PN_Main.repaint();
+        PN_Main.validate();
     }//GEN-LAST:event_PN_QLHoaDonMouseClicked
 
-    private void btnExistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExistActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         System.exit(0);
-    }//GEN-LAST:event_btnExistActionPerformed
-
-    private void tblGioHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGioHangMouseClicked
-        showDetailHDCT();
-    }//GEN-LAST:event_tblGioHangMouseClicked
-
-    private void PN_KhachHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PN_KhachHangMouseClicked
-        nextPN(QL_KhachHang);
-    }//GEN-LAST:event_PN_KhachHangMouseClicked
-
-    private void btnTaoHDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTaoHDMouseClicked
-        iBH.add(getFormDataHD());
-        System.out.println(getFormDataHD());
-        loadDataHD();
-    }//GEN-LAST:event_btnTaoHDMouseClicked
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2921,30 +2896,6 @@ public class SRM_BanHang extends javax.swing.JFrame {
         });
     }
 
-    private BanhangReponse getFormDataHD() {
-        java.util.Date currentDate = new java.util.Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date ngayTao;
-        ngayTao = Date.valueOf(sdf.format(currentDate));
-        return new BanhangReponse(null, "F3C912B2-488E-439A-9E23-713DE3A66E33", "B8542ECD-3349-4684-8661-A5962E70E127", "HD02", String.valueOf(cboPthuctt.getSelectedItem()), "0.2", ngayTao, ngayTao);
-    }
-
-    private void showDetailHDCT() {
-        int index = tblGioHang.getSelectedRow();
-        HoaDonChiTiet h = iHDCT.getAll().get(index);
-        lblMaKH.setText(h.getHoaDon().getKhachHang().getMaKH());
-        lblTenKH.setText(h.getHoaDon().getKhachHang().getHoTen());
-        lblMaHD.setText(h.getHoaDon().getMaHD());
-        txtTenND.setText(h.getHoaDon().getNguoiDung().getHoTen());
-        BigDecimal tongTien = h.getHoaDon().getTongTien();
-        int tt = Integer.parseInt(String.valueOf(tongTien));
-        int KM = h.getKhuyenMai().getGiamGia();
-        txtTongTien.setText(tt + "");
-        txtGiamGia.setText(KM + " %");
-        txtThanhToan.setText(tt - (tt * (KM / 100)) + "");
-        cbb_hd_HinhThucTT.setSelectedItem(h.getHoaDon().getPttt());
-    }
-
     private void loadDataSP() {
         String Header[] = {"STT,Ma SP", "Ten SP", "Chat Lieu", "SIZE", "Mau Sac", "So Luong", "Don Gia"};
         modelSP = new DefaultTableModel(Header, 0);
@@ -2978,13 +2929,6 @@ public class SRM_BanHang extends javax.swing.JFrame {
         }
     }
 
-    private void nextPN(JPanel pn) {
-        PN_Main.removeAll();
-        PN_Main.add(pn);
-        PN_Main.repaint();
-        PN_Main.validate();
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel AnhNV;
     private javax.swing.JPanel ChucNang;
@@ -3013,7 +2957,6 @@ public class SRM_BanHang extends javax.swing.JFrame {
     private javax.swing.JPanel SanPham;
     private javax.swing.JPanel ThanhToan;
     private javax.swing.JPanel ThongTin;
-    private javax.swing.JButton btnExist;
     private javax.swing.JButton btnLamMoiKH;
     private javax.swing.JButton btnSuaKH;
     private javax.swing.JButton btnTaoHD;
@@ -3049,6 +2992,7 @@ public class SRM_BanHang extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbb_hd_TrangThaiThanhToan;
     private javax.swing.JComboBox<String> cbb_nd_ChucVu;
     private javax.swing.JComboBox<String> cboPthuctt;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -3198,7 +3142,7 @@ public class SRM_BanHang extends javax.swing.JFrame {
     private javax.swing.JLabel lblHangHuy;
     private javax.swing.JLabel lblHoaDon;
     private javax.swing.JLabel lblMaHD;
-    private javax.swing.JLabel lblMaKH;
+    private javax.swing.JLabel lblSdt;
     private javax.swing.JLabel lblTenKH;
     private javax.swing.JLabel lbl_sp_Anh;
     private javax.swing.JRadioButton rdoNamKH;

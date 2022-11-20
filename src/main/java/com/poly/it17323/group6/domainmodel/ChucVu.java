@@ -29,7 +29,7 @@ public class ChucVu implements Serializable {
     @Id
     @Column(name = "IdCV")
     @GeneratedValue
-    private UUID idCV;
+    private String idCV;
 
     @Column(name = "MaCV")
     private String maCV;

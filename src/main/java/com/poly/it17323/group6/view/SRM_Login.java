@@ -4,8 +4,9 @@
  */
 package com.poly.it17323.group6.view;
 
-import com.poly.it17323.group6.service.INguoiDungService;
-import com.poly.it17323.group6.service.ipml.NguoiDungService;
+import com.poly.it17323.group6.response.QLNguoiDungResponse;
+import com.poly.it17323.group6.service.IQLNguoiDungService;
+import com.poly.it17323.group6.service.ipml.QLNguoiDungService;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,14 +15,20 @@ import javax.swing.JOptionPane;
  */
 public class SRM_Login extends javax.swing.JFrame {
 
-    private INguoiDungService iND = new NguoiDungService();
+    private final IQLNguoiDungService iqlnds;
 
+    /**
+     * Creates new form SRM_Login
+     */
     public SRM_Login() {
         initComponents();
         setLocationRelativeTo(this);
-
+        iqlnds = new QLNguoiDungService();
     }
 
+    QLNguoiDungResponse getFormData(){
+        return new QLNguoiDungResponse(txtUser.getText(),String.valueOf(psPass.getPassword()),"Nhân viên");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -39,9 +46,9 @@ public class SRM_Login extends javax.swing.JFrame {
         btnExit = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         txtUser = new javax.swing.JTextField();
-        txtPass = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
+        psPass = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,11 +97,11 @@ public class SRM_Login extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, 180, -1));
-
-        txtPass.setBorder(null);
-        jPanel1.add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 180, -1));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, 180, 10));
         jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, 180, 10));
+
+        psPass.setBorder(null);
+        jPanel1.add(psPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 180, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,7 +122,7 @@ public class SRM_Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void txtUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserActionPerformed
-
+        // TODO add your handling code here:
     }//GEN-LAST:event_txtUserActionPerformed
 
     private void btnQuenmkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuenmkActionPerformed
@@ -124,14 +131,28 @@ public class SRM_Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btnQuenmkActionPerformed
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
-        if (iND.Login(txtUser.getText(), txtPass.getText(), "Nhân viên") == true) {
-            JOptionPane.showMessageDialog(this, "Đăng nhập thành cônng");
-            new SRM_BanHang().setVisible(true);
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(this, "Đăng nhập thất bạị");
-            return;
-        }
+          
+        QLNguoiDungResponse qlndr = getFormData();
+        JOptionPane.showMessageDialog(this, iqlnds.Login(qlndr));
+        new SRM_BanHang().setVisible(true);
+//        if(txtUser.getText().trim().isBlank()){
+//            JOptionPane.showMessageDialog(this, "Bạn chưa nhập tên tài khoản");
+//            return;
+//        }else if(String.valueOf(psPass.getText()).trim().isBlank()){
+//            JOptionPane.showMessageDialog(this, "Bạn chưa nhập mật khẩu");
+//            return;
+//        }else
+//        if(iqlnds.Login(txtUser.getText(), String.valueOf(psPass.getText()), "Nhân viên") == true){
+//            JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
+//            new SRM_BanHang().setVisible(true);
+//            this.dispose();
+//        }else if(iqlnds.Login(txtUser.getText(), String.valueOf(psPass.getText()), "Quản lí") == true){
+//         
+//        }else{
+//            JOptionPane.showMessageDialog(this, "Đăng nhập thất bạị");
+//            return;
+//        }
+
     }//GEN-LAST:event_btnDangNhapActionPerformed
 
     /**
@@ -179,7 +200,7 @@ public class SRM_Login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField txtPass;
+    private javax.swing.JPasswordField psPass;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
 }

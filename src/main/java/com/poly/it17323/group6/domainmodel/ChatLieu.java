@@ -30,7 +30,7 @@ public class ChatLieu implements Serializable {
     @Id
     @Column(name = "IdCL")
     @GeneratedValue
-    private UUID idCL;
+    private String idCL;
 
     @Column(name = "MaCL")
     private String maCL;

@@ -30,7 +30,7 @@ public class SanPham implements Serializable {
     @Id
     @Column(name = "IdSP")
     @GeneratedValue
-    private UUID idSP;
+    private String idSP;
 
     @Column(name = "MaSP")
     private String maSP;

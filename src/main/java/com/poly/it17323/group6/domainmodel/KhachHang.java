@@ -30,7 +30,7 @@ public class KhachHang implements Serializable {
     @Id
     @Column(name = "IdKH")
     @GeneratedValue
-    private UUID idKH;
+    private String idKH;
 
     @Column(name = "MaKH")
     private String maKH;

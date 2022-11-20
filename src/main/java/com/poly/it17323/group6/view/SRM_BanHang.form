@@ -127,7 +127,7 @@
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btnExist" min="-2" pref="122" max="-2" attributes="0"/>
+                      <Component id="jButton1" min="-2" pref="122" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -151,7 +151,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="PN_KhachHang" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                      <Component id="btnExist" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -443,9 +443,6 @@
                   <Color blue="ff" green="cc" red="33" type="rgb"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="PN_KhachHangMouseClicked"/>
-              </Events>
 
               <Layout>
                 <DimensionLayout dim="0">
@@ -481,12 +478,12 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="btnExist">
+            <Component class="javax.swing.JButton" name="jButton1">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Exits"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExistActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
               </Events>
             </Component>
             <Container class="javax.swing.JPanel" name="jPanel4">
@@ -732,9 +729,6 @@
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
                         <Component class="javax.swing.JTable" name="tblGioHang">
-                          <Events>
-                            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblGioHangMouseClicked"/>
-                          </Events>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -891,8 +885,8 @@
                                   </Group>
                                   <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="lblSdt" min="-2" pref="173" max="-2" attributes="0"/>
                                       <Component id="lblTenKH" min="-2" pref="173" max="-2" attributes="0"/>
-                                      <Component id="lblMaKH" min="-2" pref="173" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="1" attributes="0">
@@ -909,12 +903,12 @@
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel8" linkSize="2" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                                      <Component id="lblMaKH" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblTenKH" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jButton5" linkSize="17" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="lblTenKH" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblSdt" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel10" linkSize="2" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                                       <Component id="jButton6" linkSize="17" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
@@ -932,7 +926,7 @@
                             <Property name="text" type="java.lang.String" value="Ma KH"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JLabel" name="lblMaKH">
+                        <Component class="javax.swing.JLabel" name="lblTenKH">
                           <Properties>
                             <Property name="text" type="java.lang.String" value="jLabel9"/>
                           </Properties>
@@ -945,7 +939,7 @@
                             <Property name="text" type="java.lang.String" value="Ten KH"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JLabel" name="lblTenKH">
+                        <Component class="javax.swing.JLabel" name="lblSdt">
                           <Properties>
                             <Property name="text" type="java.lang.String" value="jLabel11"/>
                           </Properties>
@@ -1221,9 +1215,6 @@
                             </Property>
                             <Property name="text" type="java.lang.String" value="T&#x1ea1;o h&#xf3;a &#x111;&#x1a1;n"/>
                           </Properties>
-                          <Events>
-                            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnTaoHDMouseClicked"/>
-                          </Events>
                         </Component>
                       </SubComponents>
                     </Container>

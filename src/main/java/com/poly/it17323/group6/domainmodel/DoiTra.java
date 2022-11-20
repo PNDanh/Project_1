@@ -34,7 +34,7 @@ public class DoiTra implements Serializable {
     @Id
     @Column(name = "IdDoiTra")
     @GeneratedValue
-    private UUID idDT;
+    private String idDT;
 
     @Column(name = "LyDoDoiTra")
     private String lyDoDT;
