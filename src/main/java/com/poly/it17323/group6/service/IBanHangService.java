@@ -11,5 +11,13 @@ import com.poly.it17323.group6.response.BanhangReponse;
  * @author pdanh
  */
 public interface IBanHangService {
-    boolean add(BanhangReponse b);
+    boolean addHD(BanhangReponse b);
+    
+    boolean addHDCT(BanhangReponse b);
+    
+    boolean updateHDCT(BanhangReponse b);
+    
+    boolean updateCTSP(BanhangReponse b);
+    
+    String getMaTang();
 }

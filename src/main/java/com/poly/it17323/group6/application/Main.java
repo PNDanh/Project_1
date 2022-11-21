@@ -14,7 +14,7 @@ import com.poly.it17323.group6.view.SRM_Login;
 public class Main {
 
     public static void main(String[] args) {
-        new SRM_BanHang().setVisible(true);
+        new SRM_Login().setVisible(true);
     }
 
 }

@@ -7,6 +7,7 @@ package com.poly.it17323.group6.repository;
 import com.poly.it17323.group6.domainmodel.KhachHang;
 import com.poly.it17323.group6.hibernateconfig.Hibernate_Util;
 import java.util.List;
+import java.util.UUID;
 import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -27,7 +28,7 @@ public class KhachHangRepository {
         return lists;
     }
 
-    public KhachHang getOne(String id) {
+    public KhachHang getOne(UUID id) {
         String sql = fromTable + " WHERE id = :id";
         Query query = session.createQuery(sql, KhachHang.class);
         query.setParameter("id", id);
@@ -72,9 +73,5 @@ public class KhachHangRepository {
             e.printStackTrace(System.out);
         }
         return null;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new KhachHangRepository().getOne("B8542ECD-3349-4684-8661-A5962E70E127"));
     }
 }

@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.UUID;
 import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -22,12 +23,18 @@ public class HoaDonRepository {
     private String fromTable = "From HoaDon";
 
     public List<HoaDon> getAll() {
-        Query query = session.createQuery(fromTable, HoaDon.class);
+        Query query = session.createQuery(fromTable + " order by MaHD desc", HoaDon.class);
         List<HoaDon> list = query.getResultList();
         return list;
     }
+    
+    public static void main(String[] args) {
+        for (HoaDon hoaDon : new HoaDonRepository().getAll()) {
+            System.out.println(hoaDon);
+        }
+    }
 
-    public HoaDon getOne(String id) {
+    public HoaDon getOne(UUID id) {
         String sql = fromTable + "Where id =: id";
         Query query = session.createQuery(fromTable, HoaDon.class);
         query.setParameter("id", id);

@@ -1,4 +1,4 @@
-             /*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -8,6 +8,7 @@ import com.poly.it17323.group6.domainmodel.ChucVu;
 import com.poly.it17323.group6.domainmodel.NguoiDung;
 import com.poly.it17323.group6.hibernateconfig.Hibernate_Util;
 import java.util.List;
+import java.util.UUID;
 import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -28,7 +29,7 @@ public class NguoiDungRepository {
         return lists;
     }
 
-    public NguoiDung getOne(String id) {
+    public NguoiDung getOne(UUID id) {
         String sql = fromTable + " WHERE id = :id";
         Query query = session.createQuery(sql, NguoiDung.class);
         query.setParameter("id", id);
@@ -53,7 +54,7 @@ public class NguoiDungRepository {
         Transaction transaction = null;
         try ( Session session = Hibernate_Util.getFACTORY().openSession()) {
             transaction = session.beginTransaction();
-            session.update(nguoidung);
+            session.saveOrUpdate(nguoidung);
             transaction.commit();
             return true;
         } catch (Exception e) {

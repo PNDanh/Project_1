@@ -12,5 +12,7 @@ import java.util.List;
  * @author pdanh
  */
 public interface IChiTietSanPhamService {
+
     List<ChiTietSanPham> getAll();
+
 }
