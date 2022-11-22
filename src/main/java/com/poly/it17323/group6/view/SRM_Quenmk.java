@@ -51,6 +51,7 @@ public class SRM_Quenmk extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(51, 153, 255));
         jLabel1.setText("QUÊN MẬT KHẨU");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -117,12 +118,19 @@ public class SRM_Quenmk extends javax.swing.JFrame {
 
     private void btnCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckActionPerformed
         QLNguoiDungResponse nd = getFormData();
-        if (txtEmail.getText().trim().isBlank()) {
+        if (iqlnds.checkMail(nd) != null) {
             JOptionPane.showMessageDialog(this, iqlnds.checkMail(nd));
+            new SRM_ResetPass().setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, iqlnds.emailFailse(nd));
+////            new SRM_ResetPass().setVisible(false);
+            return;
+
         }
 
 //        JOptionPane.showMessageDialog(this, iqlnds.checkMail(nd));
-        new SRM_ResetPass().setVisible(true);
+
     }//GEN-LAST:event_btnCheckActionPerformed
 
     /**

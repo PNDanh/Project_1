@@ -25,7 +25,7 @@ public class SRM_BanHang extends javax.swing.JFrame {
 
     private IHoaDonService iHD = new HoaDonService();
     private IHoaDonChiTietService iHDCT = new HoaDonChiTietService();
-    private IChiTietSanPhamService iCTSP = new ChiTietSanPhamService();
+//    private IChiTietSanPhamService iCTSP = new ChiTietSanPhamService();
     private DefaultTableModel modelSP;
     private DefaultTableModel modelHD;
     private DefaultTableModel modelCTHD;
@@ -39,7 +39,7 @@ public class SRM_BanHang extends javax.swing.JFrame {
         cardLayout = (CardLayout) PN_Main.getLayout();
         ImageIcon im1 = new ImageIcon("user.png");
         txtAnhNV.setIcon(im1);
-        loadDataSP();
+//        loadDataSP();
         loadDataHD();
         loadHDCT();
     }
@@ -2896,16 +2896,16 @@ public class SRM_BanHang extends javax.swing.JFrame {
         });
     }
 
-    private void loadDataSP() {
-        String Header[] = {"STT,Ma SP", "Ten SP", "Chat Lieu", "SIZE", "Mau Sac", "So Luong", "Don Gia"};
-        modelSP = new DefaultTableModel(Header, 0);
-        modelSP.setRowCount(0);
-        tblSanPham.setModel(modelSP);
-        int stt = 1;
-        for (ChiTietSanPham x : iCTSP.getAll()) {
-            modelSP.addRow(new Object[]{stt++, x.getSanPham().getMaSP(), x.getSanPham().getTenSP(), x.getChatLieu().getTenCL(), x.getSize().getTen(), x.getMauSac().getTenMS(), x.getSlTon(), x.getGia()});
-        }
-    }
+//    private void loadDataSP() {
+//        String Header[] = {"STT,Ma SP", "Ten SP", "Chat Lieu", "SIZE", "Mau Sac", "So Luong", "Don Gia"};
+//        modelSP = new DefaultTableModel(Header, 0);
+//        modelSP.setRowCount(0);
+//        tblSanPham.setModel(modelSP);
+//        int stt = 1;
+//        for (ChiTietSanPham x : iCTSP.getAll()) {
+//            modelSP.addRow(new Object[]{stt++, x.getSanPham().getMaSP(), x.getSanPham().getTenSP(), x.getChatLieu().getTenCL(), x.getSize().getTen(), x.getMauSac().getTenMS(), x.getSlTon(), x.getGia()});
+//        }
+//    }
 
     private void loadDataHD() {
         String Header[] = {"STT", "Ma HD", "Ma ND", "Ngay Tao", "Tinh Trang"};

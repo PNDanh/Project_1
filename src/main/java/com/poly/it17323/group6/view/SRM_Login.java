@@ -26,9 +26,10 @@ public class SRM_Login extends javax.swing.JFrame {
         iqlnds = new QLNguoiDungService();
     }
 
-    QLNguoiDungResponse getFormData(){
-        return new QLNguoiDungResponse(txtUser.getText(),String.valueOf(psPass.getPassword()),"Nhân viên");
+    QLNguoiDungResponse getFormData() {
+        return new QLNguoiDungResponse(txtUser.getText(), String.valueOf(psPass.getPassword()), "Nhân viên");
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -57,6 +58,7 @@ public class SRM_Login extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(51, 102, 255));
         jLabel1.setText("LOGIN");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(108, 14, -1, 54));
 
@@ -131,10 +133,16 @@ public class SRM_Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btnQuenmkActionPerformed
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
-          
         QLNguoiDungResponse qlndr = getFormData();
-        JOptionPane.showMessageDialog(this, iqlnds.Login(qlndr));
-        new SRM_BanHang().setVisible(true);
+        if (iqlnds.login(qlndr) != null) {
+            JOptionPane.showMessageDialog(this, iqlnds.login(qlndr));
+            new SRM_BanHang().setVisible(true);
+            this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(this, iqlnds.loginFailse(qlndr));
+            return;
+        }
+
 //        if(txtUser.getText().trim().isBlank()){
 //            JOptionPane.showMessageDialog(this, "Bạn chưa nhập tên tài khoản");
 //            return;
@@ -158,37 +166,7 @@ public class SRM_Login extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SRM_Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SRM_Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SRM_Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SRM_Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SRM_Login().setVisible(true);
-            }
-        });
-    }
+  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDangNhap;
