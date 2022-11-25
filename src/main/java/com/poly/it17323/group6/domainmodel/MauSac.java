@@ -30,7 +30,7 @@ public class MauSac implements Serializable {
     @Id
     @Column(name = "IdMau")
     @GeneratedValue
-    private String idMS;
+    private UUID idMS;
 
     @Column(name = "MaMau")
     private String maMS;

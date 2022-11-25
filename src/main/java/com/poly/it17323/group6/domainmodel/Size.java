@@ -30,7 +30,7 @@ public class Size implements Serializable {
     @Id
     @Column(name = "IdSize")
     @GeneratedValue
-    private String id;
+    private UUID id;
 
     @Column(name = "MaSize")
     private String ma;

@@ -35,7 +35,7 @@ public class HoaDon implements Serializable {
     @Id
     @Column(name = "IdHD")
     @GeneratedValue
-    private String idHD;
+    private UUID idHD;
 
     @Column(name = "MaHD")
     private String maHD;

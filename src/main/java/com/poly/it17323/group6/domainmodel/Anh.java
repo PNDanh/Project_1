@@ -33,7 +33,7 @@ public class Anh implements Serializable {
     @Id
     @Column(name = "IdAnh")
     @GeneratedValue
-    private String idAnh;
+    private UUID idAnh;
 
     @Column(name = "MaAnh")
     private String maAnh;

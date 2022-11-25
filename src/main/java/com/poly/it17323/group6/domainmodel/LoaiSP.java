@@ -30,7 +30,7 @@ public class LoaiSP implements Serializable {
     @Id
     @Column(name = "IdLoaiSP")
     @GeneratedValue
-    private String id;
+    private UUID id;
 
     @Column(name = "MaLoai")
     private String ma;

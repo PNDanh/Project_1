@@ -13,18 +13,21 @@ import java.util.List;
  * @author Admin
  */
 public interface IQLNguoiDungService {
+
     List<QLNguoiDungResponse> getAllNguoiDung();
-    
+
     String login(QLNguoiDungResponse qlndr);
-    
+
+    QLNguoiDungResponse getOneNv(QLNguoiDungResponse response);
+
     String loginFailse(QLNguoiDungResponse qlndr);
-    
+
     String checkMail(QLNguoiDungResponse nd);
-    
+
     String emailFailse(QLNguoiDungResponse qlndr);
-    
+
     boolean addQLND(QLNguoiDungResponse qlND);
-    
+
     String updatePass(QLNguoiDungResponse qlND);
-    
+
 }

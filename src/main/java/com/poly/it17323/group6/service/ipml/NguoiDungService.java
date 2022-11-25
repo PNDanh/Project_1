@@ -5,31 +5,31 @@
 package com.poly.it17323.group6.service.ipml;
 
 import com.poly.it17323.group6.domainmodel.NguoiDung;
-import com.poly.it17323.group6.repository.NguoiDungRepository;
+import com.poly.it17323.group6.response.QLNguoiDungResponse;
 import com.poly.it17323.group6.service.INguoiDungService;
+import com.poly.it17323.group6.service.IQLNguoiDungService;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
- * @author Admin
+ * @author LE BAO NGOC
  */
-public class NguoiDungService implements INguoiDungService {
-
-    private NguoiDungRepository ndRepo = new NguoiDungRepository();
+public class NguoiDungService implements INguoiDungService{
 
     @Override
     public List<NguoiDung> getAll() {
-        return ndRepo.getAll();
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public NguoiDung getOne(UUID id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public boolean Login(String tenTk, String pass, String role) {
-        for (NguoiDung x : getAll()) {
-            if (x.getTenTK().equalsIgnoreCase(tenTk) && x.getMatKhau().equalsIgnoreCase(pass) && x.getChucVu().getTenCV().equalsIgnoreCase(role)) {
-                return true;
-            }
-        }
-        return false;
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
@@ -47,4 +47,6 @@ public class NguoiDungService implements INguoiDungService {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    
+    
 }

@@ -30,7 +30,7 @@ public class KhuyenMai implements Serializable {
     @Id
     @Column(name = "IdKM")
     @GeneratedValue
-    private String idKM;
+    private UUID idKM;
 
     @Column(name = "MaKM")
     private String maKM;

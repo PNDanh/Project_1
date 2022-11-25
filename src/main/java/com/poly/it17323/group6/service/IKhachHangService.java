@@ -6,6 +6,7 @@ package com.poly.it17323.group6.service;
 
 import com.poly.it17323.group6.domainmodel.KhachHang;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -13,4 +14,6 @@ import java.util.List;
  */
 public interface IKhachHangService {
        List<KhachHang> getAll();
+       
+       KhachHang getOne(UUID id);
 }

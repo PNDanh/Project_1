@@ -34,7 +34,7 @@ public class NguoiDung implements Serializable {
     @Id
     @Column(name = "Id")
     @GeneratedValue
-    private String idND;
+    private UUID idND;
 
     @Column(name = "MaND")
     private String maND;

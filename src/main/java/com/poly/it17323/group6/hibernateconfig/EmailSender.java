@@ -5,7 +5,6 @@
 package com.poly.it17323.group6.hibernateconfig;
 
 import java.util.Properties;
-import java.util.Random;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -29,7 +28,7 @@ public class EmailSender {
     private final static String matKhau = "aputkfxvzrwzokld";
     private final static int random_int = (int) Math.floor(Math.random() * (9000 - 1000 + 1) );
 
-    public static void guiMail(String emailNhan)throws AddressException, MessagingException {
+    public static void guiMail(String emailNhan,String nd)throws AddressException, MessagingException {
         Properties prop = new Properties();
         prop.put("mail.smtp.auth", true);
         prop.put("mail.smtp.starttls.enable", "true");
@@ -55,7 +54,7 @@ public class EmailSender {
 
         // Nội dung
         MimeBodyPart mimeBodyPart = new MimeBodyPart();
-        mimeBodyPart.setContent("Mật khẩu mới của bạn là :" + random_int, "text/html; charset=utf-8");
+        mimeBodyPart.setContent(nd, "text/html; charset=utf-8");
 
         Multipart multipart = new MimeMultipart();
         multipart.addBodyPart(mimeBodyPart);

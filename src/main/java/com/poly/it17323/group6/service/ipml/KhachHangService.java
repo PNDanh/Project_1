@@ -8,6 +8,7 @@ import com.poly.it17323.group6.domainmodel.KhachHang;
 import com.poly.it17323.group6.repository.KhachHangRepository;
 import com.poly.it17323.group6.service.IKhachHangService;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -15,11 +16,16 @@ import java.util.List;
  */
 public class KhachHangService implements IKhachHangService {
 
-    private KhachHangRepository khRepo = new KhachHangRepository();
+    private final KhachHangRepository khRepo = new KhachHangRepository();
 
     @Override
     public List<KhachHang> getAll() {
         return khRepo.getAll();
+    }
+
+    @Override
+    public KhachHang getOne(UUID id) {
+        return khRepo.getOne(id);
     }
 
 }
