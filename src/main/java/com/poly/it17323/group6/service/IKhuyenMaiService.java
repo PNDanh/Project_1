@@ -5,12 +5,20 @@
 package com.poly.it17323.group6.service;
 
 import com.poly.it17323.group6.domainmodel.KhuyenMai;
+import com.poly.it17323.group6.response.KhuyenMaiReponse;
 import java.util.List;
 
 /**
  *
- * @author pdanh
+ * @author Admin
  */
 public interface IKhuyenMaiService {
+
     List<KhuyenMai> getAll();
+
+    boolean add(KhuyenMaiReponse km);
+
+    boolean update(KhuyenMaiReponse km);
+
+    boolean delete(KhuyenMaiReponse km);
 }

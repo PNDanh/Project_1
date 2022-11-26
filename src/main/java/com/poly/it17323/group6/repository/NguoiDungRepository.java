@@ -1,14 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.poly.it17323.group6.repository;
 
-import com.poly.it17323.group6.domainmodel.ChucVu;
 import com.poly.it17323.group6.domainmodel.NguoiDung;
 import com.poly.it17323.group6.hibernateconfig.Hibernate_Util;
-import com.poly.it17323.group6.response.QLNguoiDungResponse;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import javax.persistence.Query;
@@ -21,42 +14,32 @@ import org.hibernate.Transaction;
  */
 public class NguoiDungRepository {
 
-    private Session session = Hibernate_Util.getFACTORY().openSession();
+    private Session session;
 
-    private String fromTable = "From NguoiDung";
+    private final String fromTable = "From NguoiDung";
 
     public List<NguoiDung> getAll() {
+        session = Hibernate_Util.getFACTORY().openSession();
         Query query = session.createQuery(fromTable, NguoiDung.class);
         List<NguoiDung> lists = query.getResultList();
         return lists;
     }
-//
-    public NguoiDung getOne() {
-        String sql = "";
-       
-        Query query = session.createQuery("FROM NguoiDung WHERE TenTK = :tk and MatKhau = :mk");
-        query.setParameter("tk", "vanne1312");
-        query.setParameter("mk", "12345678");
-//        query.setParameter("cv", "Nhân viên");
 
+    public NguoiDung getOne(UUID id) {
+        session = Hibernate_Util.getFACTORY().openSession();
+        String sql = fromTable + " WHERE id = :id";
+        Query query = session.createQuery(sql, NguoiDung.class);
+        query.setParameter("id", id);
         NguoiDung nguoidung = (NguoiDung) query.getSingleResult();
-
         return nguoidung;
     }
-//
-    public static void main(String[] args) {
-         NguoiDung list = new NguoiDungRepository().getOne();
-         System.out.println(list.toString());
-//        List<QLNguoiDungResponse> list = new ArrayList<>();
-//        NguoiDung qlndr = new NguoiDungRepository().getOne();
-//        QLNguoiDungResponse qlndr1 = new QLNguoiDungResponse(qlndr);
-//        System.out.println(qlndr1.toString());
-
-    }
+    
+    
 
     public Boolean add(NguoiDung nguoidung) {
         Transaction transaction = null;
-        try ( Session session = Hibernate_Util.getFACTORY().openSession()) {
+        session = Hibernate_Util.getFACTORY().openSession();
+        try {
             transaction = session.beginTransaction();
             session.save(nguoidung);
             transaction.commit();
@@ -81,13 +64,23 @@ public class NguoiDungRepository {
         } catch (Exception e) {
             e.printStackTrace(System.out);
             transaction.rollback();
+            return null;
         }
-        return null;
+        
     }
+    
+//    public static void main(String[] args) {
+//        NguoiDung nd = new NguoiDung();
+//        nd.setMatKhau("87654321");
+//        nd.setEmail("ngoctkc2003@gmail.com");
+//        NguoiDungRepository ndr = new NguoiDungRepository();
+////        ndr.update(nd) == true ?""
+//    }
 
     public Boolean delete(NguoiDung nguoidung) {
         Transaction transaction = null;
-        try ( Session session = Hibernate_Util.getFACTORY().openSession()) {
+        session = Hibernate_Util.getFACTORY().openSession();
+        try {
             transaction = session.beginTransaction();
             session.delete(nguoidung);
             transaction.commit();
@@ -98,10 +91,4 @@ public class NguoiDungRepository {
         return null;
     }
 
-//        NguoiDungRepository re = new NguoiDungRepository();
-//        NguoiDung nd = re.getAll().get(0);
-//        ChucVuRepository reCV = new ChucVuRepository();
-//        ChucVu cv = reCV.getAll().get(0);
-//        re.update(new NguoiDung(nd.getIdND(), "ND0002", nd.getTenTK(), nd.getMatKhau(), nd.getHoTen(), nd.getGioiTinh(), nd.getNgaySinh(), nd.getEmail(), nd.getSdt(), nd.getDiaChi(), nd.getCccd(), nd.getTinhTrang(), nd.getNgayTao(), nd.getNgaySua(), cv));
-//    }
 }

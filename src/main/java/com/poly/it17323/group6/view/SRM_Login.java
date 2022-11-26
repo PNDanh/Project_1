@@ -1,12 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.poly.it17323.group6.view;
 
 import com.poly.it17323.group6.response.QLNguoiDungResponse;
 import com.poly.it17323.group6.service.IQLNguoiDungService;
 import com.poly.it17323.group6.service.ipml.QLNguoiDungService;
+import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,10 +17,11 @@ public class SRM_Login extends javax.swing.JFrame {
     public SRM_Login() {
         initComponents();
         setLocationRelativeTo(this);
-
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage("Logo.png"));
     }
+
     public QLNguoiDungResponse getFormData() {
-        return new QLNguoiDungResponse(txtUser.getText(), String.valueOf(psPass.getPassword()), "Nhân viên");
+        return new QLNguoiDungResponse(txtUser.getText(), String.valueOf(psPass.getPassword()));
     }
 
     /**
@@ -55,6 +53,7 @@ public class SRM_Login extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 204, 255));
         jLabel1.setText("LOGIN");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(108, 14, -1, 54));
 
@@ -139,15 +138,11 @@ public class SRM_Login extends javax.swing.JFrame {
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
         QLNguoiDungResponse qlndr = getFormData();
-        
-        //Gọi banhang sang day
         if (iND.login(qlndr) == null) {
             JOptionPane.showMessageDialog(this, iND.loginFailse(qlndr));
             return;
-
         } else {
             JOptionPane.showMessageDialog(this, iND.login(qlndr));
-//          
             new SRM_BanHang(getFormData()).setVisible(true);
             this.dispose();
         }

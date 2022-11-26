@@ -50,7 +50,7 @@ public class EmailSender {
                 Message.RecipientType.TO, InternetAddress.parse(emailNhan));
 
         // Tiêu đề
-        message.setSubject("Mật khẩu mới");
+        message.setSubject("Mã xác nhận");
 
         // Nội dung
         MimeBodyPart mimeBodyPart = new MimeBodyPart();
