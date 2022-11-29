@@ -1,12 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.poly.it17323.group6.repository;
 
 import com.poly.it17323.group6.domainmodel.KhuyenMai;
 import com.poly.it17323.group6.hibernateconfig.Hibernate_Util;
 import java.util.List;
+import java.util.UUID;
 import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -16,30 +13,40 @@ import org.hibernate.Transaction;
  * @author Admin
  */
 public class KhuyenMaiRepository {
-    private Session session = Hibernate_Util.getFACTORY().openSession();
-    
+
+    private Session session;
+
     private String fromTable = "From KhuyenMai";
-    
-    public List<KhuyenMai> getAll(){
+
+    public List<KhuyenMai> getAll() {
+        session = Hibernate_Util.getFACTORY().openSession();
         Query query = session.createQuery(fromTable, KhuyenMai.class);
         List<KhuyenMai> lists = query.getResultList();
-        return lists ;
+        return lists;
     }
+<<<<<<< HEAD
     
 <<<<<<< HEAD
     public KhuyenMai getOne(Long id) {
 =======
     public KhuyenMai getOne(String id) {
 >>>>>>> 5c93c5c1930c7dd9ce1aa21e247c3c42c151f71d
+=======
+
+    public KhuyenMai getOne(UUID id) {
+        session = Hibernate_Util.getFACTORY().openSession();
+>>>>>>> c1eedf71c5ec4491bd214f2d0abddc5457dbdba4
         String sql = fromTable + " WHERE id = :id";
         Query query = session.createQuery(sql, KhuyenMai.class);
         query.setParameter("id", id);
         KhuyenMai khuyenmai = (KhuyenMai) query.getSingleResult();
         return khuyenmai;
     }
+
     public Boolean add(KhuyenMai khuyenmai) {
         Transaction transaction = null;
-        try ( Session session = Hibernate_Util.getFACTORY().openSession()) {
+        session = Hibernate_Util.getFACTORY().openSession();
+        try {
             transaction = session.beginTransaction();
             session.save(khuyenmai);
             transaction.commit();
@@ -49,9 +56,11 @@ public class KhuyenMaiRepository {
         }
         return null;
     }
-    public Boolean update(KhuyenMai khuyenmai, Long id) {
+
+    public Boolean update(KhuyenMai khuyenmai) {
         Transaction transaction = null;
-        try ( Session session = Hibernate_Util.getFACTORY().openSession()) {
+        session = Hibernate_Util.getFACTORY().openSession();
+        try {
             transaction = session.beginTransaction();
             session.saveOrUpdate(khuyenmai);
             transaction.commit();
@@ -64,7 +73,8 @@ public class KhuyenMaiRepository {
 
     public Boolean delete(KhuyenMai khuyenmai) {
         Transaction transaction = null;
-        try ( Session session = Hibernate_Util.getFACTORY().openSession()) {
+        session = Hibernate_Util.getFACTORY().openSession();
+        try {
             transaction = session.beginTransaction();
             session.delete(khuyenmai);
             transaction.commit();
@@ -73,11 +83,5 @@ public class KhuyenMaiRepository {
             e.printStackTrace(System.out);
         }
         return null;
-    }
-    public static void main(String[] args) {
-        List<KhuyenMai> list = new KhuyenMaiRepository().getAll();
-        for (KhuyenMai khuyenmai : list){
-            System.out.println(khuyenmai.toString());
-        }
     }
 }

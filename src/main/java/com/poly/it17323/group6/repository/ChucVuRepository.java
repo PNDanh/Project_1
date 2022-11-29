@@ -1,12 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.poly.it17323.group6.repository;
 
 import com.poly.it17323.group6.domainmodel.ChucVu;
+import com.poly.it17323.group6.domainmodel.Size;
 import com.poly.it17323.group6.hibernateconfig.Hibernate_Util;
 import java.util.List;
+import java.util.UUID;
 import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -17,28 +15,32 @@ import org.hibernate.Transaction;
  */
 public class ChucVuRepository {
 
-    private Session session = Hibernate_Util.getFACTORY().openSession();
-    private String fromTable = "From ChucVu";
+    private Session session;
+
+    private final String fromTable = "From ChucVu";
 
     public List<ChucVu> getAll() {
+        session = Hibernate_Util.getFACTORY().openSession();
         Query query = session.createQuery(fromTable, ChucVu.class);
-        List<ChucVu> list = query.getResultList();
-        return list;
+        List<ChucVu> lists = query.getResultList();
+        return lists;
     }
 
-    public ChucVu getOne(String id) {
-        String sql = fromTable + "Where id =: id";
-        Query query = session.createQuery(fromTable, ChucVu.class);
+    public ChucVu getOne(UUID id) {
+        session = Hibernate_Util.getFACTORY().openSession();
+        String sql = fromTable + " WHERE id = :id";
+        Query query = session.createQuery(sql, ChucVu.class);
         query.setParameter("id", id);
-        ChucVu chucVu = (ChucVu) query.getSingleResult();
-        return chucVu;
+        ChucVu cv = (ChucVu) query.getSingleResult();
+        return cv;
     }
 
-    public Boolean add(ChucVu chucVu) {
+    public Boolean add(ChucVu cv) {
         Transaction transaction = null;
+        session = Hibernate_Util.getFACTORY().openSession();
         try {
-            transaction = (Transaction) session.beginTransaction();
-            session.save(chucVu);
+            transaction = session.beginTransaction();
+            session.save(cv);
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -47,11 +49,12 @@ public class ChucVuRepository {
         return null;
     }
 
-    public Boolean update(ChucVu chucVu) {
+    public Boolean update(ChucVu cv) {
         Transaction transaction = null;
+        session = Hibernate_Util.getFACTORY().openSession();
         try {
-            transaction = (Transaction) session.beginTransaction();
-            session.saveOrUpdate(chucVu);
+            transaction = session.beginTransaction();
+            session.saveOrUpdate(cv);
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -60,11 +63,12 @@ public class ChucVuRepository {
         return null;
     }
 
-    public Boolean delete(ChucVu chucVu) {
+    public Boolean delete(ChucVu cv) {
         Transaction transaction = null;
+        session = Hibernate_Util.getFACTORY().openSession();
         try {
-            transaction = (Transaction) session.beginTransaction();
-            session.delete(chucVu);
+            transaction = session.beginTransaction();
+            session.delete(cv);
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -72,10 +76,5 @@ public class ChucVuRepository {
         }
         return null;
     }
-     public static void main(String[] args) {
-        List<ChucVu> list = new ChucVuRepository().getAll();
-        for (ChucVu chucVu : list) {
-            System.out.println(chucVu.toString());
-        }
-    }
+
 }

@@ -41,8 +41,12 @@ public class Hibernate_Util {
         properties.put(Environment.PASS, "123456789");
 =======
         properties.put(Environment.PASS, "123456");
+<<<<<<< HEAD
 >>>>>>> 5c93c5c1930c7dd9ce1aa21e247c3c42c151f71d
         properties.put(Environment.SHOW_SQL, "true");
+=======
+        properties.put(Environment.SHOW_SQL, "false");
+>>>>>>> c1eedf71c5ec4491bd214f2d0abddc5457dbdba4
 
         conf.setProperties(properties);
 

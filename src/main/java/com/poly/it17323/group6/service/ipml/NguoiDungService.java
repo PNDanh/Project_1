@@ -1,13 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.poly.it17323.group6.service.ipml;
 
 import com.poly.it17323.group6.domainmodel.NguoiDung;
+import com.poly.it17323.group6.repository.ChucVuRepository;
 import com.poly.it17323.group6.repository.NguoiDungRepository;
+import com.poly.it17323.group6.response.NguoiDungReponse;
 import com.poly.it17323.group6.service.INguoiDungService;
+import java.sql.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -15,7 +15,8 @@ import java.util.List;
  */
 public class NguoiDungService implements INguoiDungService {
 
-    private NguoiDungRepository ndRepo = new NguoiDungRepository();
+    private final NguoiDungRepository ndRepo = new NguoiDungRepository();
+    private final ChucVuRepository cvRepo = new ChucVuRepository();
 
     @Override
     public List<NguoiDung> getAll() {
@@ -23,28 +24,35 @@ public class NguoiDungService implements INguoiDungService {
     }
 
     @Override
-    public boolean Login(String tenTk, String pass, String role) {
-        for (NguoiDung x : getAll()) {
-            if (x.getTenTK().equalsIgnoreCase(tenTk) && x.getMatKhau().equalsIgnoreCase(pass) && x.getChucVu().getTenCV().equalsIgnoreCase(role)) {
-                return true;
-            }
-        }
-        return false;
+    public boolean add(NguoiDungReponse ND) {
+        Date ngaySinh = Date.valueOf(ND.getNgaySinh());
+        Date ngayTao = Date.valueOf(ND.getNgayTao());
+        Date ngaySua = Date.valueOf(ND.getNgaySua());
+        ndRepo.add(new NguoiDung(null, ND.getMaND(), ND.getTenTK(), ND.getMatKhau(), ND.getHoVaTen(), ND.getGioiTinh(), ngaySinh, ND.getEmail(), ND.getSdt(), ND.getDiaChi(), ND.getCccd(), ND.getTinhTrang(), ngayTao, ngaySua, cvRepo.getOne(ND.getIdCV())));
+        return true;
     }
 
     @Override
-    public boolean add(NguoiDung ND) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean update(NguoiDungReponse ND) {
+        Date ngaySinh = Date.valueOf(ND.getNgaySinh());
+        Date ngayTao = Date.valueOf(ND.getNgayTao());
+        Date ngaySua = Date.valueOf(ND.getNgaySua());
+        ndRepo.update_nd(new NguoiDung(ND.getIdND(), ND.getMaND(), ND.getTenTK(), ND.getMatKhau(), ND.getHoVaTen(), ND.getGioiTinh(), ngaySinh, ND.getEmail(), ND.getSdt(), ND.getDiaChi(), ND.getCccd(), ND.getTinhTrang(), ngayTao, ngaySua, cvRepo.getOne(ND.getIdCV())));
+        return true;
     }
 
     @Override
-    public boolean update(NguoiDung ND) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean delete(NguoiDungReponse ND) {
+        Date ngaySinh = Date.valueOf(ND.getNgaySinh());
+        Date ngayTao = Date.valueOf(ND.getNgayTao());
+        Date ngaySua = Date.valueOf(ND.getNgaySua());
+        ndRepo.delete(new NguoiDung(ND.getIdND(), ND.getMaND(), ND.getTenTK(), ND.getMatKhau(), ND.getHoVaTen(), ND.getGioiTinh(), ngaySinh, ND.getEmail(), ND.getSdt(), ND.getDiaChi(), ND.getCccd(), ND.getTinhTrang(), ngayTao, ngaySua, cvRepo.getOne(ND.getIdCV())));
+        return true;
     }
 
     @Override
-    public boolean delete(NguoiDung ND) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public NguoiDung getOne(UUID id) {
+        return ndRepo.getOne(id);
     }
 
 }

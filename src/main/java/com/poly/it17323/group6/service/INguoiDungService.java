@@ -5,7 +5,9 @@
 package com.poly.it17323.group6.service;
 
 import com.poly.it17323.group6.domainmodel.NguoiDung;
+import com.poly.it17323.group6.response.NguoiDungReponse;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -15,11 +17,11 @@ public interface INguoiDungService {
 
     List<NguoiDung> getAll();
 
-    boolean Login(String tenTk, String pass, String role);
+    NguoiDung getOne(UUID id);
 
-    boolean add(NguoiDung ND);
+    boolean add(NguoiDungReponse ND);
 
-    boolean update(NguoiDung ND);
+    boolean update(NguoiDungReponse ND);
 
-    boolean delete(NguoiDung ND);
+    boolean delete(NguoiDungReponse ND);
 }

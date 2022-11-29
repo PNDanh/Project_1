@@ -1,13 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.poly.it17323.group6.view;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 import com.poly.it17323.group6.service.INguoiDungService;
 import com.poly.it17323.group6.service.ipml.NguoiDungService;
+=======
+import com.poly.it17323.group6.response.QLNguoiDungResponse;
+import com.poly.it17323.group6.service.IQLNguoiDungService;
+import com.poly.it17323.group6.service.ipml.QLNguoiDungService;
+import java.awt.Toolkit;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+>>>>>>> c1eedf71c5ec4491bd214f2d0abddc5457dbdba4
 import javax.swing.JOptionPane;
 
 >>>>>>> 5c93c5c1930c7dd9ce1aa21e247c3c42c151f71d
@@ -18,6 +24,7 @@ import javax.swing.JOptionPane;
 public class SRM_Login extends javax.swing.JFrame {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     /**
      * Creates new form SRM_Login
      */
@@ -26,12 +33,22 @@ public class SRM_Login extends javax.swing.JFrame {
         setLocationRelativeTo(this);
 =======
     private INguoiDungService iND = new NguoiDungService();
+=======
+    private IQLNguoiDungService iND = new QLNguoiDungService();
+>>>>>>> c1eedf71c5ec4491bd214f2d0abddc5457dbdba4
 
     public SRM_Login() {
         initComponents();
         setLocationRelativeTo(this);
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage("Logo.png"));
+    }
 
+<<<<<<< HEAD
 >>>>>>> 5c93c5c1930c7dd9ce1aa21e247c3c42c151f71d
+=======
+    public QLNguoiDungResponse getFormData() {
+        return new QLNguoiDungResponse(txtUser.getText(), String.valueOf(psPass.getPassword()));
+>>>>>>> c1eedf71c5ec4491bd214f2d0abddc5457dbdba4
     }
 
     /**
@@ -51,9 +68,10 @@ public class SRM_Login extends javax.swing.JFrame {
         btnExit = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         txtUser = new javax.swing.JTextField();
-        txtPass = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
+        psPass = new javax.swing.JPasswordField();
+        cbShowpass = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -62,6 +80,7 @@ public class SRM_Login extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 204, 255));
         jLabel1.setText("LOGIN");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(108, 14, -1, 54));
 
@@ -102,11 +121,20 @@ public class SRM_Login extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, 180, -1));
-
-        txtPass.setBorder(null);
-        jPanel1.add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 180, -1));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, 180, 10));
         jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, 180, 10));
+
+        psPass.setBorder(null);
+        jPanel1.add(psPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 180, -1));
+
+        cbShowpass.setBackground(new java.awt.Color(255, 255, 255));
+        cbShowpass.setText("Show pass");
+        cbShowpass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbShowpassActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cbShowpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 200, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -151,6 +179,7 @@ public class SRM_Login extends javax.swing.JFrame {
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
 <<<<<<< HEAD
+<<<<<<< HEAD
         // TODO add your handling code here:
 =======
         if (iND.Login(txtUser.getText(), txtPass.getText(), "Nhân viên") == true) {
@@ -159,10 +188,31 @@ public class SRM_Login extends javax.swing.JFrame {
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Đăng nhập thất bạị");
+=======
+        QLNguoiDungResponse qlndr = getFormData();
+        if (iND.login(qlndr) == null) {
+            JOptionPane.showMessageDialog(this, iND.loginFailse(qlndr));
+>>>>>>> c1eedf71c5ec4491bd214f2d0abddc5457dbdba4
             return;
+        } else {
+            JOptionPane.showMessageDialog(this, iND.login(qlndr));
+            try {
+                new SRM_BanHang(getFormData()).setVisible(true);
+            } catch (IOException ex) {
+                Logger.getLogger(SRM_Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.dispose();
         }
 >>>>>>> 5c93c5c1930c7dd9ce1aa21e247c3c42c151f71d
     }//GEN-LAST:event_btnDangNhapActionPerformed
+
+    private void cbShowpassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbShowpassActionPerformed
+        if (cbShowpass.isSelected()) {
+            psPass.setEchoChar((char) 0); //password = JPasswordField
+        } else {
+            psPass.setEchoChar('*');
+        }
+    }//GEN-LAST:event_cbShowpassActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,13 +253,14 @@ public class SRM_Login extends javax.swing.JFrame {
     private javax.swing.JButton btnDangNhap;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnQuenmk;
+    private javax.swing.JCheckBox cbShowpass;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField txtPass;
+    private javax.swing.JPasswordField psPass;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
 }

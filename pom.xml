@@ -55,8 +55,27 @@
             <groupId>com.toedter</groupId>
             <artifactId>jcalendar</artifactId>
             <version>1.4</version>
+<<<<<<< HEAD
         </dependency>    
 >>>>>>> 5c93c5c1930c7dd9ce1aa21e247c3c42c151f71d
+=======
+        </dependency>
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency> 
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.10</version>
+        </dependency> 
+>>>>>>> c1eedf71c5ec4491bd214f2d0abddc5457dbdba4
     </dependencies>
-    <name>DuAn1_Nhom6</name>
+    <name>DuAn1_Nhom6_Danh</name>
 </project>

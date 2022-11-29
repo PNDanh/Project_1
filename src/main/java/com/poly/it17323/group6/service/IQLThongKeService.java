@@ -4,13 +4,16 @@
  */
 package com.poly.it17323.group6.service;
 
-import com.poly.it17323.group6.domainmodel.HoaDonChiTiet;
+import com.poly.it17323.group6.domainmodel.HoaDon;
+import com.poly.it17323.group6.response.QLThongKeResponse;
 import java.util.List;
 
 /**
  *
- * @author pdanh
+ * @author Admin
  */
-public interface IHoaDonChiTietService {
-    List<HoaDonChiTiet> getAll();
+public interface IQLThongKeService {
+    List<QLThongKeResponse> getThongKe();
+    List<QLThongKeResponse> getHuy();
+    List<HoaDon> getDoanhThu();
 }
