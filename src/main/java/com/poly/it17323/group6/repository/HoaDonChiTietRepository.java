@@ -1,16 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.poly.it17323.group6.repository;
 
-import com.poly.it17323.group6.domainmodel.HoaDon;
 import com.poly.it17323.group6.domainmodel.HoaDonChiTiet;
 import com.poly.it17323.group6.hibernateconfig.Hibernate_Util;
 import java.util.List;
 import java.util.UUID;
 import javax.persistence.Query;
-import javax.swing.JOptionPane;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -20,17 +14,19 @@ import org.hibernate.Transaction;
  */
 public class HoaDonChiTietRepository {
 
-    private Session session = Hibernate_Util.getFACTORY().openSession();
+    private Session session;
 
-    private String fromTable = "From HoaDonChiTiet";
+    private final String fromTable = "From HoaDonChiTiet";
 
     public List<HoaDonChiTiet> getAll() {
+        session = Hibernate_Util.getFACTORY().openSession();
         Query query = session.createQuery(fromTable, HoaDonChiTiet.class);
         List<HoaDonChiTiet> lists = query.getResultList();
         return lists;
     }
 
     public HoaDonChiTiet getOne(UUID id) {
+        session = Hibernate_Util.getFACTORY().openSession();
         String sql = fromTable + " WHERE id = :id";
         Query query = session.createQuery(sql, HoaDonChiTiet.class);
         query.setParameter("id", id);
@@ -39,6 +35,7 @@ public class HoaDonChiTietRepository {
     }
 
     public List<HoaDonChiTiet> getAllByIDHD(UUID id) {
+        session = Hibernate_Util.getFACTORY().openSession();
         String sql = fromTable + " WHERE IdHD = :id";
         Query query = session.createQuery(sql, HoaDonChiTiet.class);
         query.setParameter("id", id);
@@ -48,7 +45,8 @@ public class HoaDonChiTietRepository {
 
     public Boolean add(HoaDonChiTiet hoadonchitiet) {
         Transaction transaction = null;
-        try ( Session session = Hibernate_Util.getFACTORY().openSession()) {
+        session = Hibernate_Util.getFACTORY().openSession();
+        try {
             transaction = session.beginTransaction();
             session.save(hoadonchitiet);
             transaction.commit();
@@ -61,7 +59,8 @@ public class HoaDonChiTietRepository {
 
     public Boolean update(HoaDonChiTiet hoadonchitiet) {
         Transaction transaction = null;
-        try ( Session session = Hibernate_Util.getFACTORY().openSession()) {
+        session = Hibernate_Util.getFACTORY().openSession();
+        try {
             transaction = session.beginTransaction();
             session.saveOrUpdate(hoadonchitiet);
             transaction.commit();
@@ -72,11 +71,15 @@ public class HoaDonChiTietRepository {
         return null;
     }
 
-    public Boolean delete(HoaDonChiTiet hoadonchitiet) {
+    public Boolean delete(UUID idHDCT) {
         Transaction transaction = null;
-        try ( Session session = Hibernate_Util.getFACTORY().openSession()) {
+        session = Hibernate_Util.getFACTORY().openSession();
+        try {
             transaction = session.beginTransaction();
-            session.delete(hoadonchitiet);
+            String sql = "DELETE FROM HoaDonChiTiet a WHERE a.idHDCT = :idHDCT";
+            Query query = session.createQuery(sql);
+            query.setParameter("idHDCT", idHDCT);
+            query.executeUpdate();
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -85,14 +88,22 @@ public class HoaDonChiTietRepository {
         return null;
     }
 
-    public static void main(String[] args) {
-        HoaDonRepository repoHD = new HoaDonRepository();
-        UUID idHD = repoHD.getAll().get(4).getIdHD();
-        System.out.println(""+idHD);
-        
-        HoaDonChiTietRepository repoHDCT = new HoaDonChiTietRepository();
-        for (HoaDonChiTiet x : repoHDCT.getAllByIDHD(idHD)) {
-            System.out.println(x.toString());
+    public Boolean update(UUID idHDCT, int sl) {
+        Transaction transaction = null;
+        session = Hibernate_Util.getFACTORY().openSession();
+        try {
+            transaction = session.beginTransaction();
+            String sql = "UPDATE HoaDonChiTiet a SET a.slMua = :sl WHERE a.idHDCT = :idHDCT";
+            Query query = session.createQuery(sql);
+            query.setParameter("idHDCT", idHDCT);
+            query.setParameter("sl", sl);
+            query.executeUpdate();
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
         }
+        return null;
     }
+
 }
