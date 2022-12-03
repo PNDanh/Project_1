@@ -40,6 +40,11 @@ public class BanHangService implements IQLBanHangService {
     }
 
     @Override
+    public HoaDon getOne_HD_ByMa(String ma) {
+        return hdRepo.getOne_ByMa(ma);
+    }
+
+    @Override
     public boolean add_HD(BanhangReponse b) {
         java.util.Date currentDate = new java.util.Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -59,6 +64,11 @@ public class BanHangService implements IQLBanHangService {
     public boolean update_HD_KH(BanhangReponse b) {
         hdRepo.update(b.getHd().getIdHD(), b.getKh());
         return true;
+    }
+
+    @Override
+    public List<HoaDon> getAll_HD_ByTT(int tt) {
+       return hdRepo.getAll_ByTT(tt);
     }
 
     @Override
@@ -88,6 +98,11 @@ public class BanHangService implements IQLBanHangService {
     @Override
     public List<ChiTietSanPham> getAll_CTSP() {
         return ctspRepo.getAll();
+    }
+
+    @Override
+    public ChiTietSanPham getOne_CTSP_ByMa(String ma) {
+        return ctspRepo.getOne_ByMa(ma);
     }
 
     @Override

@@ -1,5 +1,15 @@
 package com.poly.it17323.group6.view;
 
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamPanel;
+import com.github.sarxos.webcam.WebcamResolution;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.NotFoundException;
+import com.google.zxing.Result;
+import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
+import com.google.zxing.common.HybridBinarizer;
 import com.poly.it17323.group6.domainmodel.Anh;
 import com.poly.it17323.group6.domainmodel.ChatLieu;
 import com.poly.it17323.group6.domainmodel.ChiTietSanPham;
@@ -61,11 +71,18 @@ import com.poly.it17323.group6.service.ipml.QLSanPhamService;
 import com.poly.it17323.group6.service.ipml.QLSizeService;
 import com.poly.it17323.group6.service.ipml.QLThongKeService;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.UUID;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
@@ -73,8 +90,11 @@ import javax.swing.filechooser.FileFilter;
  *
  * @author pdanh
  */
-public final class SRM_BanHang extends javax.swing.JFrame {
+public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, ThreadFactory {
 
+    private WebcamPanel panel = null;
+    private Webcam webcam = null;
+    private Executor ex = Executors.newSingleThreadExecutor(this);
     private final IQLBanHangService iBH = new BanHangService();
     private final IQLNguoiDungService iqlnds = new QLNguoiDungService();
     private final IQLKhachHangService iQlKH = new QLKhachHangService();
@@ -124,15 +144,8 @@ public final class SRM_BanHang extends javax.swing.JFrame {
 
     public SRM_BanHang(QLNguoiDungResponse response) throws IOException {
         initComponents();
+        initWebCam();
         setLocationRelativeTo(null);
-        thaydoi.setEnabled(false);
-        xoa.setEnabled(false);
-        xoatatca.setEnabled(false);
-        btnThanhToan.setEnabled(false);
-        chon.setEnabled(false);
-        lammoi.setEnabled(false);
-        inhoadon.setEnabled(false);
-        tblGioHang.setEnabled(false);
         effectNav(PN_BanHang, PN_KhachHang, PN_KhuyenMai, PN_QLHoaDon, PN_QLNguoiDung, PN_QLSanPham, PN_QLThongKe, "Bán Hàng");
         listKM = iKM.getAll();
         listND = inds.getAll();
@@ -140,7 +153,7 @@ public final class SRM_BanHang extends javax.swing.JFrame {
         setIcon();
         setIconTK();
         loadDataSP(iBH.getAll_CTSP());
-        loadDataHD();
+        loadDataHD(iBH.getAll_HD());
         loadHoaDon();
         loadDataKM();
         loadKhachHang();
@@ -269,6 +282,7 @@ public final class SRM_BanHang extends javax.swing.JFrame {
         buttonGroup2 = new javax.swing.ButtonGroup();
         buttonGroup3 = new javax.swing.ButtonGroup();
         buttonGroup4 = new javax.swing.ButtonGroup();
+        buttonGroup5 = new javax.swing.ButtonGroup();
         Jpanel = new javax.swing.JPanel();
         ChucNang = new javax.swing.JPanel();
         PN_BanHang = new javax.swing.JPanel();
@@ -302,6 +316,9 @@ public final class SRM_BanHang extends javax.swing.JFrame {
         HoaDon = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblHoaDon = new javax.swing.JTable();
+        tatca = new javax.swing.JRadioButton();
+        thanhtoan = new javax.swing.JRadioButton();
+        chothanhtoan = new javax.swing.JRadioButton();
         GioHang = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblGioHang = new javax.swing.JTable();
@@ -344,7 +361,7 @@ public final class SRM_BanHang extends javax.swing.JFrame {
         btnThanhToan = new javax.swing.JButton();
         lammoi = new javax.swing.JButton();
         inhoadon = new javax.swing.JButton();
-        jPanel5 = new javax.swing.JPanel();
+        panelQR = new javax.swing.JPanel();
         QL_NguoiDung = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel15 = new javax.swing.JPanel();
@@ -951,17 +968,57 @@ public final class SRM_BanHang extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblHoaDon);
 
+        tatca.setBackground(new java.awt.Color(232, 211, 227));
+        buttonGroup5.add(tatca);
+        tatca.setSelected(true);
+        tatca.setText("Tat ca");
+        tatca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tatcaActionPerformed(evt);
+            }
+        });
+
+        thanhtoan.setBackground(new java.awt.Color(232, 211, 227));
+        buttonGroup5.add(thanhtoan);
+        thanhtoan.setText("Da thanh toan");
+        thanhtoan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                thanhtoanActionPerformed(evt);
+            }
+        });
+
+        chothanhtoan.setBackground(new java.awt.Color(232, 211, 227));
+        buttonGroup5.add(chothanhtoan);
+        chothanhtoan.setText("Cho thanh toan");
+        chothanhtoan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chothanhtoanActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout HoaDonLayout = new javax.swing.GroupLayout(HoaDon);
         HoaDon.setLayout(HoaDonLayout);
         HoaDonLayout.setHorizontalGroup(
             HoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(HoaDonLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(tatca)
+                .addGap(28, 28, 28)
+                .addComponent(thanhtoan, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(chothanhtoan)
+                .addContainerGap())
         );
         HoaDonLayout.setVerticalGroup(
             HoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, HoaDonLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))
+                .addGroup(HoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tatca)
+                    .addComponent(thanhtoan)
+                    .addComponent(chothanhtoan))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         GioHang.setBackground(new java.awt.Color(232, 211, 227));
@@ -1038,11 +1095,6 @@ public final class SRM_BanHang extends javax.swing.JFrame {
         jButton1.setText("Thêm SP");
 
         jButton5.setText("Tim Kiem");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout SanPhamLayout = new javax.swing.GroupLayout(SanPham);
         SanPham.setLayout(SanPhamLayout);
@@ -1190,11 +1242,6 @@ public final class SRM_BanHang extends javax.swing.JFrame {
         btnTaoHD.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnTaoHDMouseClicked(evt);
-            }
-        });
-        btnTaoHD.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTaoHDActionPerformed(evt);
             }
         });
 
@@ -1356,19 +1403,9 @@ public final class SRM_BanHang extends javax.swing.JFrame {
                 .addComponent(ThanhToan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ma QR", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 177, Short.MAX_VALUE)
-        );
+        panelQR.setBackground(new java.awt.Color(255, 255, 255));
+        panelQR.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ma QR", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        panelQR.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         javax.swing.GroupLayout QL_BanHangLayout = new javax.swing.GroupLayout(QL_BanHang);
         QL_BanHang.setLayout(QL_BanHangLayout);
@@ -1381,7 +1418,7 @@ public final class SRM_BanHang extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, QL_BanHangLayout.createSequentialGroup()
                         .addComponent(HoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(panelQR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(DonHang, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE))
         );
@@ -1393,12 +1430,12 @@ public final class SRM_BanHang extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, QL_BanHangLayout.createSequentialGroup()
                         .addGroup(QL_BanHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(HoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(panelQR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(GioHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(SanPham, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         PN_Main.add(QL_BanHang, "card4");
@@ -2119,12 +2156,6 @@ public final class SRM_BanHang extends javax.swing.JFrame {
         jLabel33.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel33.setText("Tìm kiếm hoá đơn: ");
 
-        txt_hd_timKiem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_hd_timKiemActionPerformed(evt);
-            }
-        });
-
         jPanel14.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel43.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -2743,11 +2774,6 @@ public final class SRM_BanHang extends javax.swing.JFrame {
         btnChonKH.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnChonKHMouseClicked(evt);
-            }
-        });
-        btnChonKH.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnChonKHActionPerformed(evt);
             }
         });
 
@@ -3828,15 +3854,7 @@ public final class SRM_BanHang extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExistActionPerformed
 
     private void tblGioHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGioHangMouseClicked
-        HoaDon hd = iBH.getAll_HD().get(tblHoaDon.getSelectedRow());
-        if (hd.getTinhTrang() == 1) {
-            xoa.setEnabled(false);
-            xoatatca.setEnabled(false);
-            return;
-        }
-        tblSanPham.setRowSelectionAllowed(false);
-        xoa.setEnabled(true);
-        xoatatca.setEnabled(true);
+
     }//GEN-LAST:event_tblGioHangMouseClicked
 
     private void PN_KhachHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PN_KhachHangMouseClicked
@@ -3845,9 +3863,8 @@ public final class SRM_BanHang extends javax.swing.JFrame {
     }//GEN-LAST:event_PN_KhachHangMouseClicked
 
     private void btnTaoHDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTaoHDMouseClicked
-        chon.setEnabled(true);
         iBH.add_HD(getFormDataHD());
-        loadDataHD();
+        loadDataHD(iBH.getAll_HD());
         loadHoaDon();
         loadDataGH_Rong();
         clearForm();
@@ -3857,25 +3874,10 @@ public final class SRM_BanHang extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTaoHDMouseClicked
 
     private void tblHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonMouseClicked
-        int index = tblHoaDon.getSelectedRow();
-        HoaDon HD = iBH.getAll_HD().get(index);
+        HoaDon HD = iBH.getOne_HD_ByMa(tblHoaDon.getValueAt(tblHoaDon.getSelectedRow(), 1).toString());
         showDetailHD(HD);
         tblHoaDon.setRowSelectionAllowed(true);
         loadDataGH(iBH.getAll_HDCTByIDHD(HD.getIdHD()));
-        tblHoaDon.setRowSelectionAllowed(true);
-        if (HD.getTinhTrang() == 1) {
-            tblGioHang.setEnabled(false);
-            tblSanPham.setEnabled(false);
-            xoa.setEnabled(false);
-            xoatatca.setEnabled(false);
-            btnThanhToan.setEnabled(false);
-            inhoadon.setEnabled(false);
-            lammoi.setEnabled(false);
-            chon.setEnabled(false);
-            return;
-        }
-        tblSanPham.setEnabled(true);
-        tblGioHang.setEnabled(true);
     }//GEN-LAST:event_tblHoaDonMouseClicked
 
     private void tblSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamMouseClicked
@@ -3883,8 +3885,8 @@ public final class SRM_BanHang extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Ban phai tao HD de mua hang");
             return;
         }
-        HoaDon HD = iBH.getAll_HD().get(tblHoaDon.getSelectedRow());
-        ChiTietSanPham CTSP = iBH.getAll_CTSP().get(tblSanPham.getSelectedRow());
+        HoaDon HD = iBH.getOne_HD_ByMa(tblHoaDon.getValueAt(tblHoaDon.getSelectedRow(), 1).toString());
+        ChiTietSanPham CTSP = iBH.getOne_CTSP_ByMa(tblSanPham.getValueAt(tblSanPham.getSelectedRow(), 1).toString());
         String ipSL = JOptionPane.showInputDialog(this, "Moi nhap so luong");
         if (ipSL.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Khong duoc de trong");
@@ -3921,18 +3923,11 @@ public final class SRM_BanHang extends javax.swing.JFrame {
         loadDataSP(iBH.getAll_CTSP());
         loadDataGH(iBH.getAll_HDCTByIDHD(HD.getIdHD()));
         tinhTien(HD);
-        if (!iBH.getAll_HDCTByIDHD(iBH.getAll_HD().get(tblHoaDon.getSelectedRow()).getIdHD()).isEmpty()) {
-            xoa.setEnabled(true);
-            xoatatca.setEnabled(true);
-            btnThanhToan.setEnabled(true);
-            inhoadon.setEnabled(true);
-            lammoi.setEnabled(true);
-        }
+        txtTimKiem.setText("");
     }//GEN-LAST:event_tblSanPhamMouseClicked
 
     private void xoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_xoaMouseClicked
-        int index = tblHoaDon.getSelectedRow();
-        HoaDon HD = iBH.getAll_HD().get(index);
+        HoaDon HD = iBH.getOne_HD_ByMa(tblHoaDon.getValueAt(tblHoaDon.getSelectedRow(), 1).toString());
         int indexGH = tblGioHang.getSelectedRow();
         int sl = Integer.parseInt(tblGioHang.getValueAt(indexGH, 3).toString());
         ChiTietSanPham CTSP = iBH.getAll_HDCTByIDHD(HD.getIdHD()).get(indexGH).getChiTietSanPham();
@@ -3942,22 +3937,11 @@ public final class SRM_BanHang extends javax.swing.JFrame {
         iBH.delete_HDCT(getFormDataHDCT_DL());
         loadDataGH(iBH.getAll_HDCTByIDHD(HD.getIdHD()));
         tinhTien(HD);
-        if (iBH.getAll_HDCTByIDHD(iBH.getAll_HD().get(tblHoaDon.getSelectedRow()).getIdHD()).isEmpty()) {
-            xoa.setEnabled(false);
-            xoatatca.setEnabled(false);
-            btnThanhToan.setEnabled(false);
-            lammoi.setEnabled(false);
-            inhoadon.setEnabled(false);
-        }
     }//GEN-LAST:event_xoaMouseClicked
 
     private void btnThanhToanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThanhToanMouseClicked
-        if (cboPthuctt.getSelectedIndex() == 0 && txtTienKhachDua.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Vui long nhap tien khach dua");
-            return;
-        }
         iBH.update_HD(getFormDataHD_UD());
-        loadDataHD();
+        loadDataHD(iBH.getAll_HD());
         loadHoaDon();
         loadDataGH_Rong();
         loadThongKe();
@@ -3967,12 +3951,6 @@ public final class SRM_BanHang extends javax.swing.JFrame {
         getdoanhThu();
         JOptionPane.showMessageDialog(this, "Thanh toan thanh cong !");
         clearForm();
-        xoa.setEnabled(false);
-        xoatatca.setEnabled(false);
-        btnThanhToan.setEnabled(false);
-        chon.setEnabled(false);
-        lammoi.setEnabled(false);
-        inhoadon.setEnabled(false);
     }//GEN-LAST:event_btnThanhToanMouseClicked
 
     private void chonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chonMouseClicked
@@ -3988,7 +3966,6 @@ public final class SRM_BanHang extends javax.swing.JFrame {
             String add = iQlKH.addKh(kh);;
             JOptionPane.showMessageDialog(this, add);
             loadKhachHang();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -4622,24 +4599,12 @@ public final class SRM_BanHang extends javax.swing.JFrame {
         HoaDon hoadon = ihd.getAll().get(row);
         ihd.delete(hoadon.getIdHD());
         loadHoaDon();
-        loadDataHD();
+        loadDataHD(iBH.getAll_HD());
     }//GEN-LAST:event_btn_hd_XoaActionPerformed
 
     private void tbl_HoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_HoaDonMouseClicked
         loadHoaDonChiTiet(iBH.getAll_HDCTByIDHD(ihd.getAll().get(tbl_HoaDon.getSelectedRow()).getIdHD()));
     }//GEN-LAST:event_tbl_HoaDonMouseClicked
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void txt_hd_timKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_hd_timKiemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_hd_timKiemActionPerformed
-
-    private void btnTaoHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoHDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnTaoHDActionPerformed
 
     private void btn_ctsp_Sua2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ctsp_Sua2ActionPerformed
         try {
@@ -4672,18 +4637,26 @@ public final class SRM_BanHang extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_ctsp_Sua2ActionPerformed
 
-    private void btnChonKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonKHActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnChonKHActionPerformed
-
     private void txtTimKiemCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTimKiemCaretUpdate
-        loadDataSP(iBH.getAll_ByName("%" + txtTimKiem.getText() + "%"));
+        loadDataSP(iBH.getAll_ByName(txtTimKiem.getText()));
     }//GEN-LAST:event_txtTimKiemCaretUpdate
 
     private void txtTienKhachDuaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTienKhachDuaCaretUpdate
         BigDecimal tienThua = BigDecimal.valueOf(Double.parseDouble(txtThanhToan.getText())).subtract(BigDecimal.valueOf(Double.parseDouble(txtTienKhachDua.getText().trim())));
         txtTienThua.setText(tienThua + "");
     }//GEN-LAST:event_txtTienKhachDuaCaretUpdate
+
+    private void tatcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tatcaActionPerformed
+        loadDataHD(iBH.getAll_HD());
+    }//GEN-LAST:event_tatcaActionPerformed
+
+    private void thanhtoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_thanhtoanActionPerformed
+        loadDataHD(iBH.getAll_HD_ByTT(1));
+    }//GEN-LAST:event_thanhtoanActionPerformed
+
+    private void chothanhtoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chothanhtoanActionPerformed
+        loadDataHD(iBH.getAll_HD_ByTT(0));
+    }//GEN-LAST:event_chothanhtoanActionPerformed
 
     // Công
     private void loadND() {
@@ -5296,6 +5269,7 @@ public final class SRM_BanHang extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.ButtonGroup buttonGroup4;
+    private javax.swing.ButtonGroup buttonGroup5;
     private javax.swing.JComboBox<String> cbb_ctsp_ChatLieu;
     private javax.swing.JComboBox<String> cbb_ctsp_LoaiSP;
     private javax.swing.JComboBox<String> cbb_ctsp_Mau;
@@ -5308,6 +5282,7 @@ public final class SRM_BanHang extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cboKM;
     private javax.swing.JComboBox<String> cboPthuctt;
     private javax.swing.JButton chon;
+    private javax.swing.JRadioButton chothanhtoan;
     private javax.swing.JLabel hoadon;
     private javax.swing.JButton inhoadon;
     private javax.swing.JButton jButton1;
@@ -5426,7 +5401,6 @@ public final class SRM_BanHang extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel31;
     private javax.swing.JPanel jPanel37;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
@@ -5471,6 +5445,7 @@ public final class SRM_BanHang extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_sp_Anh;
     private javax.swing.JLabel nhanvien;
     private javax.swing.JLabel nhanvien4;
+    private javax.swing.JPanel panelQR;
     private javax.swing.JPanel pnDetailND;
     private javax.swing.JRadioButton rdo_ctsp_DangKinhDoanh;
     private javax.swing.JRadioButton rdo_ctsp_DungKinhDoanh;
@@ -5484,6 +5459,7 @@ public final class SRM_BanHang extends javax.swing.JFrame {
     private javax.swing.JRadioButton rdo_nd_NghiLam;
     private javax.swing.JRadioButton rdo_nd_Nu;
     private javax.swing.JLabel sanpham;
+    private javax.swing.JRadioButton tatca;
     private javax.swing.JTable tblDoanhThu;
     private javax.swing.JTable tblDonHangHuy;
     private javax.swing.JTable tblGioHang;
@@ -5500,6 +5476,7 @@ public final class SRM_BanHang extends javax.swing.JFrame {
     private javax.swing.JTable tbl_nd_DangLam;
     private javax.swing.JTabbedPane tbl_nd_NghiLam;
     private javax.swing.JTable tbl_ttsp;
+    private javax.swing.JRadioButton thanhtoan;
     private javax.swing.JButton thaydoi;
     private javax.swing.JLabel thongke;
     private javax.swing.JLabel timkiem;
@@ -5583,7 +5560,7 @@ public final class SRM_BanHang extends javax.swing.JFrame {
     }
 
     private BanhangReponse getFormDataHD_UD_KH() {
-        return new BanhangReponse(iBH.getAll_HD().get(tblHoaDon.getSelectedRow()), iBH.getAll_KH().get(tblKhachHang.getSelectedRow()));
+        return new BanhangReponse(iBH.getOne_HD_ByMa(tblHoaDon.getValueAt(tblHoaDon.getSelectedRow(), 1).toString()), iBH.getAll_KH().get(tblKhachHang.getSelectedRow()));
     }
 
     private BanhangReponse getFormDataHD() {
@@ -5591,11 +5568,11 @@ public final class SRM_BanHang extends javax.swing.JFrame {
     }
 
     private BanhangReponse getFormDataHD_UD() {
-        return new BanhangReponse(iBH.getAll_HD().get(tblHoaDon.getSelectedRow()), BigDecimal.valueOf(Double.parseDouble(txtThanhToan.getText())), 1, cboPthuctt.getSelectedIndex() == 0 ? 1 : 0);
+        return new BanhangReponse(iBH.getOne_HD_ByMa(tblHoaDon.getValueAt(tblHoaDon.getSelectedRow(), 1).toString()), BigDecimal.valueOf(Double.parseDouble(txtThanhToan.getText())), 1, cboPthuctt.getSelectedIndex() == 0 ? 1 : 0);
     }
 
     private BanhangReponse getFormDataHDCT(String ipSL) {
-        return new BanhangReponse(iBH.getAll_HD().get(tblHoaDon.getSelectedRow()), iBH.getAll_CTSP().get(tblSanPham.getSelectedRow()), ipSL, iBH.getAll_KM().get(cboKM.getSelectedIndex()));
+        return new BanhangReponse(iBH.getAll_HD().get(tblHoaDon.getSelectedRow()), iBH.getOne_CTSP_ByMa(tblSanPham.getValueAt(tblSanPham.getSelectedRow(), 1).toString()), ipSL, iBH.getAll_KM().get(cboKM.getSelectedIndex()));
     }
 
     private BanhangReponse getFormDataHDCT_UD(HoaDonChiTiet HDCT, String ipSL) {
@@ -5603,7 +5580,7 @@ public final class SRM_BanHang extends javax.swing.JFrame {
     }
 
     private BanhangReponse getFormDataCTSP_UD(String sl) {
-        return new BanhangReponse(iBH.getAll_CTSP().get(tblSanPham.getSelectedRow()), sl);
+        return new BanhangReponse(iBH.getOne_CTSP_ByMa(tblSanPham.getValueAt(tblSanPham.getSelectedRow(), 1).toString()), sl);
     }
 
     private BanhangReponse getFormDataHDCT_DL() {
@@ -5666,13 +5643,13 @@ public final class SRM_BanHang extends javax.swing.JFrame {
         }
     }
 
-    private void loadDataHD() {
+    private void loadDataHD(List<HoaDon> lstHD) {
         String Header[] = {"STT", "Ma HD", "Ma NV", "Ngay Tao", "Tinh Trang"};
         modelHD = new DefaultTableModel(Header, 0);
         modelHD.setRowCount(0);
         tblHoaDon.setModel(modelHD);
         int stt = 1;
-        for (HoaDon x : iBH.getAll_HD()) {
+        for (HoaDon x : lstHD) {
             String trangThai = x.getTinhTrang() == 0 ? "Cho thanh toan" : "Da thanh toan";
             modelHD.addRow(new Object[]{stt++, x.getMaHD(), x.getNguoiDung().getMaND(), x.getNgayTao(), trangThai});
         }
@@ -5720,5 +5697,55 @@ public final class SRM_BanHang extends javax.swing.JFrame {
         pn6.setBackground(new Color(210, 166, 199));
         setTitle(title);
     }
+
+    public void initWebCam() {
+        Dimension size = WebcamResolution.QVGA.getSize();
+        webcam = Webcam.getWebcams().get(0);
+        webcam.setViewSize(size);
+        panel = new WebcamPanel(webcam);
+        panel.setPreferredSize(size);
+        panel.setFPSDisplayed(true);
+        panelQR.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 25, 200, 200));
+        ex.execute(this);
+    }
+
+    @Override
+    public void run() {
+        do {
+
+            try {
+                Thread.sleep(100);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+            Result result = null;
+            BufferedImage image = null;
+
+            if (webcam.isOpen()) {
+                if ((image = webcam.getImage()) == null) {
+                    continue;
+                }
+            }
+            LuminanceSource source = new BufferedImageLuminanceSource(image);
+            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+
+            try {
+                result = new MultiFormatReader().decode(bitmap);
+            } catch (Exception e) {
+            }
+            if (result != null) {
+                JOptionPane.showConfirmDialog(this, result.getText().substring(7, result.getText().length()));
+            }
+        } while (true);
+    }
+
+    @Override
+    public Thread newThread(Runnable r) {
+        Thread t = new Thread(r, "My Thread");
+        t.setDaemon(true);
+        return t;
+    }
+
     // Danh
 }
