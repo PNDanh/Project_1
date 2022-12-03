@@ -96,17 +96,7 @@ public class BanHangService implements IQLBanHangService {
     }
 
     @Override
-    public List<ChiTietSanPham> getAll_CTSP() {
-        return ctspRepo.getAll();
-    }
-
-    @Override
-    public ChiTietSanPham getOne_CTSP_ByMa(String ma) {
-        return ctspRepo.getOne_ByMa(ma);
-    }
-
-    @Override
-    public List<ChiTietSanPham> getAll_ByName(String name) {
+    public List<ChiTietSanPham> getAll_CTSP_ByName(String name) {
         return ctspRepo.getAll_ByName(name);
     }
 

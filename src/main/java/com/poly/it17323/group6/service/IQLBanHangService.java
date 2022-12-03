@@ -27,7 +27,7 @@ public interface IQLBanHangService {
     boolean update_HD(BanhangReponse b);
 
     boolean update_HD_KH(BanhangReponse b);
-    
+
     List<HoaDon> getAll_HD_ByTT(int tt);
 
     boolean add_HDCT(BanhangReponse b);
@@ -40,11 +40,7 @@ public interface IQLBanHangService {
 
     String getMaTang();
 
-    List<ChiTietSanPham> getAll_CTSP();
-
-    ChiTietSanPham getOne_CTSP_ByMa(String ma);
-
-    List<ChiTietSanPham> getAll_ByName(String name);
+    List<ChiTietSanPham> getAll_CTSP_ByName(String name);
 
     List<HoaDonChiTiet> getAll_HDCT();
 

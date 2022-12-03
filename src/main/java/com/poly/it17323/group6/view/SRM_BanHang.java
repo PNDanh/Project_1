@@ -6,7 +6,6 @@ import com.github.sarxos.webcam.WebcamResolution;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.LuminanceSource;
 import com.google.zxing.MultiFormatReader;
-import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
@@ -77,8 +76,7 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.text.DecimalFormat;
 import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -144,15 +142,15 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
 
     public SRM_BanHang(QLNguoiDungResponse response) throws IOException {
         initComponents();
-        initWebCam();
         setLocationRelativeTo(null);
+        initWebCam();
         effectNav(PN_BanHang, PN_KhachHang, PN_KhuyenMai, PN_QLHoaDon, PN_QLNguoiDung, PN_QLSanPham, PN_QLThongKe, "Bán Hàng");
         listKM = iKM.getAll();
         listND = inds.getAll();
         listCV = icvs.getAll();
         setIcon();
         setIconTK();
-        loadDataSP(iBH.getAll_CTSP());
+        loadDataSP();
         loadDataHD(iBH.getAll_HD());
         loadHoaDon();
         loadDataKM();
@@ -329,7 +327,6 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
         tblSanPham = new javax.swing.JTable();
         txtTimKiem = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         timkiem = new javax.swing.JLabel();
         DonHang = new javax.swing.JPanel();
         KhachHang = new javax.swing.JPanel();
@@ -362,6 +359,9 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
         lammoi = new javax.swing.JButton();
         inhoadon = new javax.swing.JButton();
         panelQR = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        ketqua = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
         QL_NguoiDung = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel15 = new javax.swing.JPanel();
@@ -1094,22 +1094,18 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
 
         jButton1.setText("Thêm SP");
 
-        jButton5.setText("Tim Kiem");
-
         javax.swing.GroupLayout SanPhamLayout = new javax.swing.GroupLayout(SanPham);
         SanPham.setLayout(SanPhamLayout);
         SanPhamLayout.setHorizontalGroup(
             SanPhamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(SanPhamLayout.createSequentialGroup()
                 .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton5)
+                .addGap(74, 74, 74)
+                .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jScrollPane3)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
         );
         SanPhamLayout.setVerticalGroup(
             SanPhamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1117,8 +1113,7 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
                 .addGroup(SanPhamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(SanPhamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton1)
-                        .addComponent(jButton5))
+                        .addComponent(jButton1))
                     .addComponent(timkiem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
@@ -1403,9 +1398,17 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
                 .addComponent(ThanhToan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        panelQR.setBackground(new java.awt.Color(255, 255, 255));
+        panelQR.setBackground(new java.awt.Color(232, 211, 227));
         panelQR.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ma QR", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
         panelQR.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel11.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 12)); // NOI18N
+        jLabel11.setText("Ket qua :");
+        panelQR.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
+
+        ketqua.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 12)); // NOI18N
+        panelQR.add(ketqua, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 180, 20));
+        panelQR.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 180, -1));
 
         javax.swing.GroupLayout QL_BanHangLayout = new javax.swing.GroupLayout(QL_BanHang);
         QL_BanHang.setLayout(QL_BanHangLayout);
@@ -2759,7 +2762,6 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
 
         jPanel6.setBackground(new java.awt.Color(232, 211, 227));
 
-        btnDelete.setBackground(new java.awt.Color(255, 255, 0));
         btnDelete.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnDelete.setText("DELETE");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -2768,7 +2770,6 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
             }
         });
 
-        btnChonKH.setBackground(new java.awt.Color(255, 255, 0));
         btnChonKH.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnChonKH.setText("CHOOSE");
         btnChonKH.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -2777,7 +2778,6 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
             }
         });
 
-        btnSuaKH.setBackground(new java.awt.Color(255, 255, 0));
         btnSuaKH.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnSuaKH.setText("UPDATE");
         btnSuaKH.addActionListener(new java.awt.event.ActionListener() {
@@ -2786,7 +2786,6 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
             }
         });
 
-        btnThemKH.setBackground(new java.awt.Color(255, 255, 0));
         btnThemKH.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnThemKH.setText("ADD");
         btnThemKH.addActionListener(new java.awt.event.ActionListener() {
@@ -2795,7 +2794,6 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
             }
         });
 
-        btnLamMoiKH.setBackground(new java.awt.Color(255, 255, 0));
         btnLamMoiKH.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLamMoiKH.setText("CLEAR");
         btnLamMoiKH.addActionListener(new java.awt.event.ActionListener() {
@@ -2804,7 +2802,6 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
             }
         });
 
-        btnrefresh.setBackground(new java.awt.Color(255, 255, 0));
         btnrefresh.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnrefresh.setText("REFRESH");
         btnrefresh.addActionListener(new java.awt.event.ActionListener() {
@@ -3886,7 +3883,7 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
             return;
         }
         HoaDon HD = iBH.getOne_HD_ByMa(tblHoaDon.getValueAt(tblHoaDon.getSelectedRow(), 1).toString());
-        ChiTietSanPham CTSP = iBH.getOne_CTSP_ByMa(tblSanPham.getValueAt(tblSanPham.getSelectedRow(), 1).toString());
+        ChiTietSanPham CTSP = iBH.getAll_CTSP_ByName(txtTimKiem.getText()).get(tblSanPham.getSelectedRow());
         String ipSL = JOptionPane.showInputDialog(this, "Moi nhap so luong");
         if (ipSL.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Khong duoc de trong");
@@ -3920,7 +3917,7 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
         }
         int slTon = CTSP.getSlTon() - Integer.parseInt(ipSL);
         iBH.updateSL_CTSP(getFormDataCTSP_UD(String.valueOf(slTon)));
-        loadDataSP(iBH.getAll_CTSP());
+        loadDataSP();
         loadDataGH(iBH.getAll_HDCTByIDHD(HD.getIdHD()));
         tinhTien(HD);
         txtTimKiem.setText("");
@@ -3933,7 +3930,7 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
         ChiTietSanPham CTSP = iBH.getAll_HDCTByIDHD(HD.getIdHD()).get(indexGH).getChiTietSanPham();
         int slUP = sl + CTSP.getSlTon();
         iBH.updateSL_CTSP(new BanhangReponse(CTSP, String.valueOf(slUP)));
-        loadDataSP(iBH.getAll_CTSP());
+        loadDataSP();
         iBH.delete_HDCT(getFormDataHDCT_DL());
         loadDataGH(iBH.getAll_HDCTByIDHD(HD.getIdHD()));
         tinhTien(HD);
@@ -4638,7 +4635,7 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
     }//GEN-LAST:event_btn_ctsp_Sua2ActionPerformed
 
     private void txtTimKiemCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTimKiemCaretUpdate
-        loadDataSP(iBH.getAll_ByName(txtTimKiem.getText()));
+        loadDataSP();
     }//GEN-LAST:event_txtTimKiemCaretUpdate
 
     private void txtTienKhachDuaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTienKhachDuaCaretUpdate
@@ -5286,11 +5283,11 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
     private javax.swing.JLabel hoadon;
     private javax.swing.JButton inhoadon;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -5424,8 +5421,10 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane3;
+    private javax.swing.JLabel ketqua;
     private javax.swing.JLabel khachhang;
     private javax.swing.JLabel khuyenmai;
     private javax.swing.JButton lammoi;
@@ -5559,12 +5558,12 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
         hoadon.setIcon(imhd);
     }
 
-    private BanhangReponse getFormDataHD_UD_KH() {
-        return new BanhangReponse(iBH.getOne_HD_ByMa(tblHoaDon.getValueAt(tblHoaDon.getSelectedRow(), 1).toString()), iBH.getAll_KH().get(tblKhachHang.getSelectedRow()));
-    }
-
     private BanhangReponse getFormDataHD() {
         return new BanhangReponse(iBH.getOne_ND(ndRP.getIdND()), iBH.getAll_KH().get(0));
+    }
+
+    private BanhangReponse getFormDataHD_UD_KH() {
+        return new BanhangReponse(iBH.getOne_HD_ByMa(tblHoaDon.getValueAt(tblHoaDon.getSelectedRow(), 1).toString()), iBH.getAll_KH().get(tblKhachHang.getSelectedRow()));
     }
 
     private BanhangReponse getFormDataHD_UD() {
@@ -5572,19 +5571,19 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
     }
 
     private BanhangReponse getFormDataHDCT(String ipSL) {
-        return new BanhangReponse(iBH.getAll_HD().get(tblHoaDon.getSelectedRow()), iBH.getOne_CTSP_ByMa(tblSanPham.getValueAt(tblSanPham.getSelectedRow(), 1).toString()), ipSL, iBH.getAll_KM().get(cboKM.getSelectedIndex()));
+        return new BanhangReponse(iBH.getOne_HD_ByMa(tblHoaDon.getValueAt(tblHoaDon.getSelectedRow(), 1).toString()), iBH.getAll_CTSP_ByName(txtTimKiem.getText()).get(tblSanPham.getSelectedRow()), ipSL, iBH.getAll_KM().get(cboKM.getSelectedIndex()));
     }
 
     private BanhangReponse getFormDataHDCT_UD(HoaDonChiTiet HDCT, String ipSL) {
         return new BanhangReponse(HDCT, ipSL);
     }
 
-    private BanhangReponse getFormDataCTSP_UD(String sl) {
-        return new BanhangReponse(iBH.getOne_CTSP_ByMa(tblSanPham.getValueAt(tblSanPham.getSelectedRow(), 1).toString()), sl);
+    private BanhangReponse getFormDataHDCT_DL() {
+        return new BanhangReponse(iBH.getAll_HDCTByIDHD(iBH.getOne_HD_ByMa(tblHoaDon.getValueAt(tblHoaDon.getSelectedRow(), 1).toString()).getIdHD()).get(tblGioHang.getSelectedRow()));
     }
 
-    private BanhangReponse getFormDataHDCT_DL() {
-        return new BanhangReponse(iBH.getAll_HDCTByIDHD(iBH.getAll_HD().get(tblHoaDon.getSelectedRow()).getIdHD()).get(tblGioHang.getSelectedRow()));
+    private BanhangReponse getFormDataCTSP_UD(String sl) {
+        return new BanhangReponse(iBH.getAll_CTSP_ByName(txtTimKiem.getText()).get(tblSanPham.getSelectedRow()), sl);
     }
 
     private void clearForm() {
@@ -5605,8 +5604,8 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
         NguoiDung nd = iBH.getOne_ND(hd.getNguoiDung().getIdND());
         lblMaKH.setText(kh.getMaKH());
         lblTenKH.setText(kh.getHoTen());
-        lblMaHD.setText(" " + hd.getMaHD());
-        lblTenND.setText(" " + nd.getHoTen());
+        lblMaHD.setText(hd.getMaHD());
+        lblTenND.setText(nd.getHoTen());
         tinhTien(hd);
     }
 
@@ -5619,7 +5618,8 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
         for (BigDecimal bigDecimal : lstGia) {
             sum += Double.parseDouble(bigDecimal.toString());
         }
-        txtTongTien.setText(String.valueOf(sum));
+        DecimalFormat df = new DecimalFormat("#,###");
+        txtTongTien.setText(df.format(sum) + " VND");
         List<BigDecimal> lstGiamGia = new ArrayList<>();
         for (HoaDonChiTiet x : iBH.getAll_HDCTByIDHD(hd.getIdHD())) {
             lstGiamGia.add(x.getGiaKM().multiply(BigDecimal.valueOf(x.getSlMua())));
@@ -5628,17 +5628,19 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
         for (BigDecimal bigDecimal : lstGiamGia) {
             giamSum += Double.parseDouble(bigDecimal.toString());
         }
-        txtGiamGia.setText(String.valueOf(sum - giamSum));
-        txtThanhToan.setText(String.valueOf(giamSum));
+        DecimalFormat dfggia = new DecimalFormat("#,###");
+        txtGiamGia.setText(dfggia.format(sum - giamSum) + " VND");
+        DecimalFormat dfttoan = new DecimalFormat("#,###");
+        txtThanhToan.setText(dfttoan.format(giamSum) + " VND");
     }
 
-    private void loadDataSP(List<ChiTietSanPham> lstCTSP) {
+    private void loadDataSP() {
         String Header[] = {"STT", "Ma SP", "Ten SP", "Chat Lieu", "SIZE", "Mau Sac", "So Luong", "Don Gia"};
         modelSP = new DefaultTableModel(Header, 0);
         modelSP.setRowCount(0);
         tblSanPham.setModel(modelSP);
         int stt = 1;
-        for (ChiTietSanPham x : lstCTSP) {
+        for (ChiTietSanPham x : iBH.getAll_CTSP_ByName(txtTimKiem.getText())) {
             modelSP.addRow(new Object[]{stt++, x.getSanPham().getMaSP(), x.getSanPham().getTenSP(), x.getChatLieu().getTenCL(), x.getSize().getTen(), x.getMauSac().getTenMS(), x.getSlTon(), x.getGia()});
         }
     }
@@ -5705,7 +5707,8 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
         panel = new WebcamPanel(webcam);
         panel.setPreferredSize(size);
         panel.setFPSDisplayed(true);
-        panelQR.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 25, 200, 200));
+        panelQR.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 25, 191, 110));
+//        6, 15, 191, 180
         ex.execute(this);
     }
 
@@ -5735,7 +5738,12 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
             } catch (Exception e) {
             }
             if (result != null) {
-                JOptionPane.showConfirmDialog(this, result.getText().substring(7, result.getText().length()));
+                ketqua.setText(result.getText().substring(7, result.getText().length()));
+                for (ChiTietSanPham x : iBH.getAll_CTSP_ByName(txtTimKiem.getText())) {
+                    if (ketqua.getText().equalsIgnoreCase(x.getSanPham().getMaSP())) {
+                        JOptionPane.showMessageDialog(this, "Chon SP");
+                    }
+                }
             }
         } while (true);
     }
