@@ -685,7 +685,7 @@
                               <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                               <Component id="tatca" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                              <Component id="thanhtoan" min="-2" pref="98" max="-2" attributes="0"/>
+                              <Component id="dathanhtoan" min="-2" pref="98" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="chothanhtoan" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -697,7 +697,7 @@
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="tatca" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="thanhtoan" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="dathanhtoan" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="chothanhtoan" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
@@ -747,7 +747,7 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tatcaActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JRadioButton" name="thanhtoan">
+                    <Component class="javax.swing.JRadioButton" name="dathanhtoan">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="e3" green="d3" red="e8" type="rgb"/>
@@ -758,7 +758,7 @@
                         <Property name="text" type="java.lang.String" value="Da thanh toan"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="thanhtoanActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dathanhtoanActionPerformed"/>
                       </Events>
                     </Component>
                     <Component class="javax.swing.JRadioButton" name="chothanhtoan">

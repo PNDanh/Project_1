@@ -90,10 +90,18 @@ import javax.swing.filechooser.FileFilter;
  */
 public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, ThreadFactory {
 
+    // Danh
     private WebcamPanel panel = null;
     private Webcam webcam = null;
     private Executor ex = Executors.newSingleThreadExecutor(this);
     private final IQLBanHangService iBH = new BanHangService();
+    private DefaultTableModel modelSP;
+    private DefaultTableModel modelHD;
+    private DefaultTableModel modelCTHD;
+    private final DefaultComboBoxModel boxKM = new DefaultComboBoxModel();
+    private double ttoan;
+    private double sum;
+    private double giamSum;
     private final IQLNguoiDungService iqlnds = new QLNguoiDungService();
     private final IQLKhachHangService iQlKH = new QLKhachHangService();
     List<KhachHangResponse> lstKh = new ArrayList<>();
@@ -105,19 +113,14 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
     private final IHoaDonService ihd = new HoaDonService();
     private DefaultTableModel model = new DefaultTableModel();
     private DefaultTableModel mdHD = new DefaultTableModel();
-    private DefaultTableModel modelSP;
-    private DefaultTableModel modelHD;
-    private DefaultTableModel modelCTHD;
     private DefaultTableModel modelKM;
     private DefaultTableModel modelND;
     private DefaultTableModel modelCV;
     private DefaultComboBoxModel comboBoxND;
-    private final DefaultComboBoxModel boxKM = new DefaultComboBoxModel();
+
     private List<KhuyenMai> listKM;
     private List<NguoiDung> listND;
     private List<ChucVu> listCV;
-    private double sum;
-    private double giamSum;
     private final QLNguoiDungResponse ndRP;
     //Van
     private byte[] personalImage;
@@ -315,7 +318,7 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
         jScrollPane1 = new javax.swing.JScrollPane();
         tblHoaDon = new javax.swing.JTable();
         tatca = new javax.swing.JRadioButton();
-        thanhtoan = new javax.swing.JRadioButton();
+        dathanhtoan = new javax.swing.JRadioButton();
         chothanhtoan = new javax.swing.JRadioButton();
         GioHang = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -978,12 +981,12 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
             }
         });
 
-        thanhtoan.setBackground(new java.awt.Color(232, 211, 227));
-        buttonGroup5.add(thanhtoan);
-        thanhtoan.setText("Da thanh toan");
-        thanhtoan.addActionListener(new java.awt.event.ActionListener() {
+        dathanhtoan.setBackground(new java.awt.Color(232, 211, 227));
+        buttonGroup5.add(dathanhtoan);
+        dathanhtoan.setText("Da thanh toan");
+        dathanhtoan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                thanhtoanActionPerformed(evt);
+                dathanhtoanActionPerformed(evt);
             }
         });
 
@@ -1005,7 +1008,7 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
                 .addGap(14, 14, 14)
                 .addComponent(tatca)
                 .addGap(28, 28, 28)
-                .addComponent(thanhtoan, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(dathanhtoan, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(chothanhtoan)
                 .addContainerGap())
@@ -1015,7 +1018,7 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, HoaDonLayout.createSequentialGroup()
                 .addGroup(HoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tatca)
-                    .addComponent(thanhtoan)
+                    .addComponent(dathanhtoan)
                     .addComponent(chothanhtoan))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -3861,7 +3864,8 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
 
     private void btnTaoHDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTaoHDMouseClicked
         iBH.add_HD(getFormDataHD());
-        loadDataHD(iBH.getAll_HD());
+        chothanhtoan.setSelected(true);
+        loadDataHD(iBH.getAll_HD_ByTT(0));
         loadHoaDon();
         loadDataGH_Rong();
         clearForm();
@@ -3921,6 +3925,9 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
         loadDataGH(iBH.getAll_HDCTByIDHD(HD.getIdHD()));
         tinhTien(HD);
         txtTimKiem.setText("");
+        BigDecimal tienThua = (txtTienKhachDua.getText().isEmpty() ? BigDecimal.valueOf(0.0) : BigDecimal.valueOf(Double.valueOf(txtTienKhachDua.getText()))).subtract(BigDecimal.valueOf(ttoan));
+        DecimalFormat dftt = new DecimalFormat("#,###");
+        txtTienThua.setText(dftt.format(tienThua) + " VND");
     }//GEN-LAST:event_tblSanPhamMouseClicked
 
     private void xoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_xoaMouseClicked
@@ -3934,11 +3941,15 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
         iBH.delete_HDCT(getFormDataHDCT_DL());
         loadDataGH(iBH.getAll_HDCTByIDHD(HD.getIdHD()));
         tinhTien(HD);
+        BigDecimal tienThua = (txtTienKhachDua.getText().isEmpty() ? BigDecimal.valueOf(0.0) : BigDecimal.valueOf(Double.valueOf(txtTienKhachDua.getText()))).subtract(BigDecimal.valueOf(ttoan));
+        DecimalFormat dftt = new DecimalFormat("#,###");
+        txtTienThua.setText(dftt.format(tienThua) + " VND");
     }//GEN-LAST:event_xoaMouseClicked
 
     private void btnThanhToanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThanhToanMouseClicked
+        dathanhtoan.setSelected(true);
         iBH.update_HD(getFormDataHD_UD());
-        loadDataHD(iBH.getAll_HD());
+        loadDataHD(iBH.getAll_HD_ByTT(1));
         loadHoaDon();
         loadDataGH_Rong();
         loadThongKe();
@@ -3960,7 +3971,7 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
             KhachHangResponse kh = getFormKh();
             kh.setNgaySua(java.time.LocalDate.now() + "");
             kh.setNgayTao(java.time.LocalDate.now() + "");
-            String add = iQlKH.addKh(kh);;
+            String add = iQlKH.addKh(kh);
             JOptionPane.showMessageDialog(this, add);
             loadKhachHang();
         } catch (Exception e) {
@@ -4639,17 +4650,18 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
     }//GEN-LAST:event_txtTimKiemCaretUpdate
 
     private void txtTienKhachDuaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTienKhachDuaCaretUpdate
-        BigDecimal tienThua = BigDecimal.valueOf(Double.parseDouble(txtThanhToan.getText())).subtract(BigDecimal.valueOf(Double.parseDouble(txtTienKhachDua.getText().trim())));
-        txtTienThua.setText(tienThua + "");
+        BigDecimal tienThua = (txtTienKhachDua.getText().isEmpty() ? BigDecimal.valueOf(0.0) : BigDecimal.valueOf(Double.valueOf(txtTienKhachDua.getText()))).subtract(BigDecimal.valueOf(ttoan));
+        DecimalFormat dftt = new DecimalFormat("#,###");
+        txtTienThua.setText(dftt.format(tienThua) + " VND");
     }//GEN-LAST:event_txtTienKhachDuaCaretUpdate
 
     private void tatcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tatcaActionPerformed
         loadDataHD(iBH.getAll_HD());
     }//GEN-LAST:event_tatcaActionPerformed
 
-    private void thanhtoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_thanhtoanActionPerformed
+    private void dathanhtoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dathanhtoanActionPerformed
         loadDataHD(iBH.getAll_HD_ByTT(1));
-    }//GEN-LAST:event_thanhtoanActionPerformed
+    }//GEN-LAST:event_dathanhtoanActionPerformed
 
     private void chothanhtoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chothanhtoanActionPerformed
         loadDataHD(iBH.getAll_HD_ByTT(0));
@@ -5280,6 +5292,7 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
     private javax.swing.JComboBox<String> cboPthuctt;
     private javax.swing.JButton chon;
     private javax.swing.JRadioButton chothanhtoan;
+    private javax.swing.JRadioButton dathanhtoan;
     private javax.swing.JLabel hoadon;
     private javax.swing.JButton inhoadon;
     private javax.swing.JButton jButton1;
@@ -5475,7 +5488,6 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
     private javax.swing.JTable tbl_nd_DangLam;
     private javax.swing.JTabbedPane tbl_nd_NghiLam;
     private javax.swing.JTable tbl_ttsp;
-    private javax.swing.JRadioButton thanhtoan;
     private javax.swing.JButton thaydoi;
     private javax.swing.JLabel thongke;
     private javax.swing.JLabel timkiem;
@@ -5567,7 +5579,7 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
     }
 
     private BanhangReponse getFormDataHD_UD() {
-        return new BanhangReponse(iBH.getOne_HD_ByMa(tblHoaDon.getValueAt(tblHoaDon.getSelectedRow(), 1).toString()), BigDecimal.valueOf(Double.parseDouble(txtThanhToan.getText())), 1, cboPthuctt.getSelectedIndex() == 0 ? 1 : 0);
+        return new BanhangReponse(iBH.getOne_HD_ByMa(tblHoaDon.getValueAt(tblHoaDon.getSelectedRow(), 1).toString()), BigDecimal.valueOf(ttoan), 1, cboPthuctt.getSelectedIndex() == 0 ? 1 : 0);
     }
 
     private BanhangReponse getFormDataHDCT(String ipSL) {
@@ -5632,6 +5644,7 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
         txtGiamGia.setText(dfggia.format(sum - giamSum) + " VND");
         DecimalFormat dfttoan = new DecimalFormat("#,###");
         txtThanhToan.setText(dfttoan.format(giamSum) + " VND");
+        ttoan = giamSum;
     }
 
     private void loadDataSP() {
@@ -5708,7 +5721,6 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
         panel.setPreferredSize(size);
         panel.setFPSDisplayed(true);
         panelQR.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 25, 191, 110));
-//        6, 15, 191, 180
         ex.execute(this);
     }
 
