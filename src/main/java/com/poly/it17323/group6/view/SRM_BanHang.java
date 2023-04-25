@@ -246,7 +246,7 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
         loadTableNghiLam();
         loadTableDangLam();
         loadKM(iKM.getAll());
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage("Logo.png"));
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage("img/Logo.png"));
         ndRP = getND();
         lblHoTenNV.setText(ndRP.getHoTen());
 //        cardLayout = (CardLayout) PN_Main.getLayout();
@@ -5863,7 +5863,7 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
 
     private void btn_TaiMauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TaiMauActionPerformed
         try {
-            Desktop.getDesktop().open(new File("C:\\Users\\pdanh\\OneDrive\\Máy tính\\Git\\Tree\\src\\main\\resource\\Mau.xlsx"));
+            Desktop.getDesktop().open(new File("C:\\Users\\DanhPhan\\OneDrive\\Máy tính\\Git_Hub\\Project1\\src\\main\\resource\\Mau.xlsx"));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -6705,8 +6705,8 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
     }
 
     private void setIconTK() {
-        jLabel23.setIcon(new ImageIcon("bill.png"));
-        jLabel21.setIcon(new ImageIcon("money1.png"));
+        jLabel23.setIcon(new ImageIcon("img/bill.png"));
+        jLabel21.setIcon(new ImageIcon("img/money1.png"));
 
     }
 
@@ -7432,21 +7432,21 @@ public final class SRM_BanHang extends javax.swing.JFrame implements Runnable, T
 
     // Danh
     private void setIcon() {
-        ImageIcon im1 = new ImageIcon("user.png");
+        ImageIcon im1 = new ImageIcon("img/user.png");
         lblAnhND.setIcon(im1);
-        ImageIcon imbh = new ImageIcon("banhang.png");
+        ImageIcon imbh = new ImageIcon("img/banhang.png");
         banhang.setIcon(imbh);
-        ImageIcon imnv = new ImageIcon("nhanvien.png");
+        ImageIcon imnv = new ImageIcon("img/nhanvien.png");
         nhanvien.setIcon(imnv);
-        ImageIcon imkh = new ImageIcon("khachhang.png");
+        ImageIcon imkh = new ImageIcon("img/khachhang.png");
         khachhang.setIcon(imkh);
-        ImageIcon imkm = new ImageIcon("khuyenmai.png");
+        ImageIcon imkm = new ImageIcon("img/khuyenmai.png");
         khuyenmai.setIcon(imkm);
-        ImageIcon imtk = new ImageIcon("thongke.png");
+        ImageIcon imtk = new ImageIcon("img/thongke.png");
         thongke.setIcon(imtk);
-        ImageIcon imsp = new ImageIcon("sanpham.png");
+        ImageIcon imsp = new ImageIcon("img/sanpham.png");
         sanpham.setIcon(imsp);
-        ImageIcon imhd = new ImageIcon("hoadon.png");
+        ImageIcon imhd = new ImageIcon("img/hoadon.png");
         hoadon.setIcon(imhd);
     }
 
