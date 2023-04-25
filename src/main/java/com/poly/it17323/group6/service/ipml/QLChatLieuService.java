@@ -10,7 +10,7 @@ import com.poly.it17323.group6.response.QLSanPhamResponse;
 import com.poly.it17323.group6.service.IQLChatLieuService;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -40,8 +40,16 @@ public class QLChatLieuService implements IQLChatLieuService {
 
     @Override
     public boolean addQLCL(QLSanPhamResponse qlCL) {
-        var cl = repo.add(new ChatLieu(null,new QLChatLieuService().getMaTang(), qlCL.getTenChatLieu()));
-        return cl;
+        if (qlCL.getTenChatLieu().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Không được để trống tên !!! ");
+            return false;
+        }
+        if((new QLChatLieuService().getOneByTenCL(qlCL.getTenChatLieu())) != null){
+            JOptionPane.showMessageDialog(null, "Không được để trùng tên !!! ");
+            return false;
+        }else{
+            return repo.add(new ChatLieu(null,new QLChatLieuService().getMaTang(), qlCL.getTenChatLieu()));
+        }
     }
 
     @Override
@@ -55,6 +63,21 @@ public class QLChatLieuService implements IQLChatLieuService {
         ChatLieu sp = new ChatLieu();
         sp.setIdCL(qlCL.getIdChatLieu());
         return repo.delete(sp);
+    }
+    
+        @Override
+    public QLSanPhamResponse getOneByTenCL(String ten) {
+        List<ChatLieu> list = repo.getOneByTen(ten);
+        List<QLSanPhamResponse> respon = new ArrayList<>();
+        for (ChatLieu cl : list) {
+            QLSanPhamResponse chatL = new QLSanPhamResponse(cl);
+            respon.add(chatL);
+        }
+        if(respon.size()>0){
+            return respon.get(0);
+        }else{
+            return null;
+        }
     }
 
 }

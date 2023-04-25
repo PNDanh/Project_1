@@ -13,8 +13,12 @@ import java.util.List;
  * @author Admin
  */
 public interface IQLThongKeService {
+
     List<QLThongKeResponse> getThongKe();
-    List<QLThongKeResponse> getHuy();
+    
+    List<QLThongKeResponse> getThongKeNV();
+    
     List<HoaDon> getDoanhThu();
-    List<QLThongKeResponse> getDoanhThuChart();
+    
+    
 }

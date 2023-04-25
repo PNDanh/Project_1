@@ -24,7 +24,7 @@ public class QLKhachHangService implements IQLKhachHangService {
 
     public QLKhachHangService() {
         khRepo = new KhachHangRepository();
-        ma = khRepo.getAll().size()+1;
+        ma = khRepo.getAll().size();
     }
 
     @Override
@@ -47,19 +47,16 @@ public class QLKhachHangService implements IQLKhachHangService {
     @Override
     public String addKh(KhachHangResponse kh) {
         if (kh.getHoTen().isEmpty() || kh.getGioiTinh().isEmpty() || kh.getDiaChi().isEmpty()
-                ||kh.getSdt().isEmpty()) {
+                || kh.getSdt().isEmpty()) {
             return "Vui lòng nhập đầy đủ dữ liệu!";
-        } 
-        if(kh.getSdt().length() < 10){
-           return "Số điện thoại phải nhập đủ 10 số";
         }
-        int sdt;
-        try {
-            sdt = Integer.parseInt(kh.getSdt());
-        } catch (Exception e) {
-            return "Số điện thoại phải là số!";
+        String phone = "(((\\+|)84)|0)(3|5|7|8|9)+([0-9]{8})\\b";
+        if (kh.getSdt().length() == 0) {
+            return "Nhập Số điện thoại";
+        } else if ((!kh.getSdt().matches(phone))) {
+            return "SĐT đúng định dạng của Việt Nam (+84)";
         }
-        
+
 //        if(kh.getHoTen().matches("[a-zA-Z][a-zA-Z ]+")){
 //          return "Họ tên chỉ chứa alphabet và ký tự trắng";
 //        }
@@ -78,22 +75,19 @@ public class QLKhachHangService implements IQLKhachHangService {
     @Override
     public String updateKh(KhachHangResponse kh) {
         if (kh.getHoTen().isEmpty() || kh.getGioiTinh().isEmpty() || kh.getDiaChi().isEmpty()
-                ||kh.getSdt().isEmpty()) {
+                || kh.getSdt().isEmpty()) {
             return "Vui lòng nhập đầy đủ dữ liệu!";
         }
-        if(kh.getSdt().length() < 10){
-           return "Số điện thoại phải nhập đủ 10 số";
-        }
-        int sdt;
-        try {
-            sdt = Integer.parseInt(kh.getSdt());
-        } catch (Exception e) {
-            return "Số điện thoại phải là số!";
+        String phone = "(((\\+|)84)|0)(3|5|7|8|9)+([0-9]{8})\\b";
+        if (kh.getSdt().length() == 0) {
+            return "Nhập Số điện thoại";
+        } else if ((!kh.getSdt().matches(phone))) {
+            return "SĐT đúng định dạng của Việt Nam (+84)";
         }
         Date ngaySinh = Date.valueOf(kh.getNgaySinh());
         Date ngayTao = Date.valueOf(kh.getNgayTao());
         Date ngaySua = Date.valueOf(kh.getNgaySua());
-        khRepo.update(new KhachHang(kh.getIdKh(),kh.getMaKh(), kh.getHoTen(), kh.getGioiTinh(), kh.getDiaChi(), kh.getSdt(), ngaySinh, ngayTao, ngaySua));
+        khRepo.update(new KhachHang(kh.getIdKh(), kh.getMaKh(), kh.getHoTen(), kh.getGioiTinh(), kh.getDiaChi(), kh.getSdt(), ngaySinh, ngayTao, ngaySua));
         if (kh == null) {
             return "SỬA THẤT BẠI!!!";
         } else {
@@ -116,17 +110,22 @@ public class QLKhachHangService implements IQLKhachHangService {
 
     @Override
     public String MaKh() {
-        return "KH0" + (ma++);       
+        return "KH0" + (ma++);
 // throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public KhachHangResponse getOneByMa(String ma) {
+        return new KhachHangResponse(khRepo.getOneByMa(ma));
     }
 
     @Override
     public List<KhachHangResponse> getByName(String name) {
         List<KhachHang> list = khRepo.getByName(name);
         List<KhachHangResponse> respon = new ArrayList<>();
-        for(KhachHang kh :list){
-           KhachHangResponse khang = new KhachHangResponse(kh);
-           respon.add(khang);
+        for (KhachHang kh : list) {
+            KhachHangResponse khang = new KhachHangResponse(kh);
+            respon.add(khang);
         }
         return respon;
     }

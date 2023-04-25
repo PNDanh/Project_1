@@ -20,7 +20,7 @@ public class SanPhamRepository {
 
     public List<SanPham> getAll() {
         session = Hibernate_Util.getFACTORY().openSession();
-        Query query = session.createQuery(fromTable, SanPham.class);
+        Query query = session.createQuery(fromTable + " order by maSP desc", SanPham.class);
         List<SanPham> lists = query.getResultList();
         return lists;
     }
@@ -31,6 +31,15 @@ public class SanPhamRepository {
         Query query = session.createQuery(sql, SanPham.class);
         query.setParameter("id", id);
         SanPham sanpham = (SanPham) query.getSingleResult();
+        return sanpham;
+    }
+    
+    public List<SanPham> getOneByTen(String tenSP) {
+        session = Hibernate_Util.getFACTORY().openSession();
+        String sql = fromTable + " WHERE tenSP like :tenSP";
+        Query query = session.createQuery(sql, SanPham.class);
+        query.setParameter("tenSP", tenSP);
+        List<SanPham> sanpham = query.getResultList();
         return sanpham;
     }
 

@@ -20,11 +20,17 @@ import java.util.UUID;
  */
 public interface IQLBanHangService {
 
+    HoaDon getOne_HD_ByMa(String ma);
+
     boolean add_HD(BanhangReponse b);
 
-    boolean update_HD(BanhangReponse b);
+    boolean update_HD_TQ(BanhangReponse b);
+
+    boolean update_HD_DH(BanhangReponse b);
 
     boolean update_HD_KH(BanhangReponse b);
+
+    List<HoaDon> getAll_HD_ByTT(int tt);
 
     boolean add_HDCT(BanhangReponse b);
 
@@ -34,11 +40,13 @@ public interface IQLBanHangService {
 
     boolean delete_HDCT(BanhangReponse b);
 
+    boolean delete_All_HDCT(BanhangReponse b);
+
     String getMaTang();
 
-    List<ChiTietSanPham> getAll_CTSP();
+    List<ChiTietSanPham> getAll_CTSP_ByName(String name);
 
-    List<ChiTietSanPham> getAll_ByName(String name);
+    List<ChiTietSanPham> getAll_CTSP();
 
     List<HoaDonChiTiet> getAll_HDCT();
 

@@ -19,9 +19,19 @@ public class ChatLieuRepository {
 
     public List<ChatLieu> getAll() {
         session = Hibernate_Util.getFACTORY().openSession();
-        Query query = session.createQuery(fromTable, ChatLieu.class);
+        Query query = session.createQuery(fromTable + " order by maCL desc", ChatLieu.class);
         List<ChatLieu> list = query.getResultList();
         return list;
+    }
+
+
+    public List<ChatLieu> getOneByTen(String tenCL) {
+        session = Hibernate_Util.getFACTORY().openSession();
+        String sql = fromTable + " Where tenCL like :tenCL";
+        Query query = session.createQuery(sql, ChatLieu.class);
+        query.setParameter("tenCL", tenCL);
+        List<ChatLieu> chatLieu = query.getResultList();
+        return chatLieu;
     }
 
     public ChatLieu getOne(UUID id) {

@@ -40,18 +40,29 @@ public class BanHangService implements IQLBanHangService {
     }
 
     @Override
+    public HoaDon getOne_HD_ByMa(String ma) {
+        return hdRepo.getOne_ByMa(ma);
+    }
+
+    @Override
     public boolean add_HD(BanhangReponse b) {
         java.util.Date currentDate = new java.util.Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date ngayTao;
         ngayTao = Date.valueOf(sdf.format(currentDate));
-        hdRepo.add(new HoaDon(null, new BanHangService().getMaTang(), 0, BigDecimal.valueOf(0.0), 0, ngayTao, ngayTao, b.getNd(), b.getKh()));
+        hdRepo.add(new HoaDon(null, new BanHangService().getMaTang(), 1, BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0), 0, ngayTao, ngayTao, 1, ngayTao, ngayTao, ngayTao, BigDecimal.valueOf(0.0), b.getNd(), b.getKh()));
         return true;
     }
 
     @Override
-    public boolean update_HD(BanhangReponse b) {
-        hdRepo.update(b.getHd().getIdHD(), b.getTongTien(), b.getTinhTrang(), b.getPttt());
+    public boolean update_HD_TQ(BanhangReponse b) {
+        hdRepo.update(b.getHd().getIdHD(), b.getPttt(), b.getTongTienMat(), b.getTongTienCK(), b.getTinhTrang());
+        return true;
+    }
+
+    @Override
+    public boolean update_HD_DH(BanhangReponse b) {
+        hdRepo.update(b.getHd().getIdHD(), b.getPttt(), b.getTongTienMat(), b.getTongTienCK(), b.getTinhTrang(), b.getNgayTT(), b.getTttt(), b.getNgayMuonNhan(), b.getNgayGui(), b.getNgayNhan(), b.getTienShip());
         return true;
     }
 
@@ -62,8 +73,13 @@ public class BanHangService implements IQLBanHangService {
     }
 
     @Override
+    public List<HoaDon> getAll_HD_ByTT(int tt) {
+        return hdRepo.getAll_ByTT(tt);
+    }
+
+    @Override
     public boolean add_HDCT(BanhangReponse b) {
-        hdctRepo.add(new HoaDonChiTiet(null, b.getCtsp().getGia(), Integer.parseInt(b.getSlMua()), new BigDecimal(1 - (b.getKm().getGiamGia() / 100.0)).multiply(b.getCtsp().getGia()), b.getHd(), b.getKm(), b.getCtsp()));
+        hdctRepo.add(new HoaDonChiTiet(null, b.getCtsp().getGia(), Integer.parseInt(b.getSlMua()), b.getKm() == null ? b.getCtsp().getGia() : new BigDecimal(1 - (b.getKm().getGiamGia() / 100.0)).multiply(b.getCtsp().getGia()), b.getHd(), b.getKm()==null?null:b.getKm(), b.getCtsp()));
         return true;
     }
 
@@ -80,6 +96,12 @@ public class BanHangService implements IQLBanHangService {
     }
 
     @Override
+    public boolean delete_All_HDCT(BanhangReponse b) {
+        hdctRepo.deleteAll(b.getHd().getIdHD());
+        return true;
+    }
+
+    @Override
     public boolean updateSL_CTSP(BanhangReponse b) {
         ctspRepo.update(b.getCtsp().getId(), Integer.parseInt(b.getSlMua()));
         return true;
@@ -91,7 +113,7 @@ public class BanHangService implements IQLBanHangService {
     }
 
     @Override
-    public List<ChiTietSanPham> getAll_ByName(String name) {
+    public List<ChiTietSanPham> getAll_CTSP_ByName(String name) {
         return ctspRepo.getAll_ByName(name);
     }
 

@@ -1,4 +1,3 @@
-
 package com.poly.it17323.group6.repository;
 
 import com.poly.it17323.group6.domainmodel.MauSac;
@@ -21,7 +20,7 @@ public class MauSacRepository {
 
     public List<MauSac> getAll() {
         session = Hibernate_Util.getFACTORY().openSession();
-        Query query = session.createQuery(fromTable, MauSac.class);
+        Query query = session.createQuery(fromTable + " order by maMS desc", MauSac.class);
         List<MauSac> lists = query.getResultList();
         return lists;
     }
@@ -31,6 +30,14 @@ public class MauSacRepository {
         Query query = session.createQuery(sql, MauSac.class);
         query.setParameter("id", id);
         MauSac mausac = (MauSac) query.getSingleResult();
+        return mausac;
+    }
+
+    public List<MauSac> getOneByTen(String ten) {
+        String sql = fromTable + " WHERE tenMS like :ten";
+        Query query = session.createQuery(sql, MauSac.class);
+        query.setParameter("ten", ten);
+        List<MauSac> mausac = query.getResultList();
         return mausac;
     }
 

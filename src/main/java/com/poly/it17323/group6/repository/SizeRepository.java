@@ -20,7 +20,7 @@ public class SizeRepository {
 
     public List<Size> getAll() {
         session = Hibernate_Util.getFACTORY().openSession();
-        Query query = session.createQuery(fromTable, Size.class);
+        Query query = session.createQuery(fromTable + " ORDER BY ma DESC", Size.class);
         List<Size> lists = query.getResultList();
         return lists;
     }
@@ -31,6 +31,15 @@ public class SizeRepository {
         Query query = session.createQuery(sql, Size.class);
         query.setParameter("id", id);
         Size size = (Size) query.getSingleResult();
+        return size;
+    }
+
+    public List<Size> getOneByTen(String ten) {
+        session = Hibernate_Util.getFACTORY().openSession();
+        String sql = fromTable + " WHERE ten = :ten";
+        Query query = session.createQuery(sql, Size.class);
+        query.setParameter("ten", ten);
+        List<Size> size = query.getResultList();
         return size;
     }
 

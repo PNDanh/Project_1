@@ -20,7 +20,7 @@ public class LoaiSPRepository {
 
     public List<LoaiSP> getAll() {
         session = Hibernate_Util.getFACTORY().openSession();
-        Query query = session.createQuery(fromTable, LoaiSP.class);
+        Query query = session.createQuery(fromTable + " order by ma desc", LoaiSP.class);
         List<LoaiSP> lists = query.getResultList();
         return lists;
     }
@@ -31,6 +31,15 @@ public class LoaiSPRepository {
         Query query = session.createQuery(sql, LoaiSP.class);
         query.setParameter("id", id);
         LoaiSP loaisp = (LoaiSP) query.getSingleResult();
+        return loaisp;
+    }
+
+    public List<LoaiSP> getOneByTen(String ten) {
+        session = Hibernate_Util.getFACTORY().openSession();
+        String sql = fromTable + " WHERE ten like :ten";
+        Query query = session.createQuery(sql, LoaiSP.class);
+        query.setParameter("ten", ten);
+        List<LoaiSP> loaisp = query.getResultList();
         return loaisp;
     }
 
